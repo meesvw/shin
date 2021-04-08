@@ -9,7 +9,7 @@ start_time = time.time()
 bot_location = f"{os.path.dirname(os.path.abspath(__file__))}/"
 load_dotenv()
 bot = commands.AutoShardedBot(
-    command_prefix=os.getenv("PREFIX"),
+    command_prefix=os.getenv("prefix"),
     case_insensitive=True
 )
 
@@ -66,4 +66,4 @@ for file in os.listdir(f"{bot_location}cogs"):
 
 # start bot
 print(f"{current_time()} - Load time: {str(time.time()-start_time)[:5]} seconds")
-bot.run(os.getenv("TOKEN"))
+bot.run(os.getenv("token"))
