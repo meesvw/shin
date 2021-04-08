@@ -38,9 +38,11 @@ async def on_ready():
 
 # # startup
 # print logo
-print(" _  _____ _______ _")
-print("| |/ / -_) __/ _ `/")
-print("|___/\__/_/  \_,_/ \n")
+print("   __                ")
+print("  / /  ___  ___  ___ ")
+print(" / _ \/ _ \/ _ \/ -_)")
+print("/_//_/\___/ .__/\__/ ")
+print("         /_/         \n")
 
 # check .env
 check = False
