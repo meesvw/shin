@@ -1,2 +1,2 @@
 # vera
-COSFNL Discord bot
+> COSFNL Discord bot
