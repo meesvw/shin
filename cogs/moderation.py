@@ -61,7 +61,7 @@ class Moderation(commands.Cog):
                         colour=discord.Colour.blue()
                     )
                     embed.set_author(
-                        name=f"{user.name}'s waarschuwing {number}",
+                        name=f"{user.name}'s waarschuwing {number}/{len(dict_list)}",
                         icon_url=user.avatar_url
                     )
                     embed.add_field(
