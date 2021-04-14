@@ -50,8 +50,8 @@ class Moderation(commands.Cog):
 
                 emoji_list = ["◀", "▶"]
                 menu_number = 0
-                # for emoji in emoji_list:
-                #     await message.add_reaction(emoji=emoji)
+                for emoji in emoji_list:
+                    await message.add_reaction(emoji=emoji)
                 def check(reaction, user):
                     return user == ctx.author and str(reaction.emoji) in emoji_list
                 def create_embed(number):
@@ -66,13 +66,8 @@ class Moderation(commands.Cog):
                         name="Redenen",
                         value=user_warnings["warnings"][number]["warning"]
                     )
-                    embed.add_field(
-                        name="Gegeven door",
-                        value=f"`{user_warnings['warnings'][number]['warner']}`",
-                        inline=False
-                    )
                     embed.set_footer(
-                        text=user_warnings["warnings"][number]["time"]
+                        text=f'Door: {user_warnings["warnings"][number]["warner"]} - {user_warnings["warnings"][number]["time"]}'
                     )
                     return embed
 
@@ -80,7 +75,7 @@ class Moderation(commands.Cog):
 
                 while True:
                     try:
-                        reaction, user = await self.bot.wait_for("reaction_add", timeout=15, check=check)
+                        reaction, user = await self.bot.wait_for("reaction_add", timeout=20, check=check)
                         await message.remove_reaction(str(reaction.emoji), ctx.author)
 
                         if str(reaction.emoji) == "◀" and menu_number > 0:
