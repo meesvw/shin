@@ -46,7 +46,6 @@ class Moderation(commands.Cog):
 
                 dict_list = []
                 for warning in user_warnings["warnings"]:
-                    print(warning)
                     dict_list.append(warning)
 
                 emoji_list = ["◀", "▶"]
