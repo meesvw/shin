@@ -14,7 +14,7 @@ class Moderation(commands.Cog):
 
     # warn command
     @commands.command()
-    @commands.has_permissions(administrator=True)
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def warn(self, ctx, users: commands.Greedy[discord.User], *, warning=None):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
@@ -29,7 +29,7 @@ class Moderation(commands.Cog):
 
     # show warnings command
     @commands.command()
-    @commands.has_permissions()
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def warnings(self, ctx, user: discord.User = None):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
@@ -39,23 +39,20 @@ class Moderation(commands.Cog):
         else:
             return await ctx.send(embed=await embeds.explain(
                 "warnings",
-                "Het warnings command heeft een gebruiker nodig, voorbeeld: `warnings @mvw`"
-            ))
+                f"`warnings @hope`"))
         try:
             if user_warnings["warnings"]:
                 message = await ctx.send(embed=await embeds.loading())
 
                 dict_list = []
                 for warning in user_warnings["warnings"]:
-                    if warning == "_id":
-                        pass
-                    else:
-                        dict_list.append(warning)
+                    print(warning)
+                    dict_list.append(warning)
 
                 emoji_list = ["◀", "▶"]
                 menu_number = 0
-                for emoji in emoji_list:
-                    await message.add_reaction(emoji=emoji)
+                # for emoji in emoji_list:
+                #     await message.add_reaction(emoji=emoji)
                 def check(reaction, user):
                     return user == ctx.author and str(reaction.emoji) in emoji_list
                 def create_embed(number):
@@ -63,13 +60,8 @@ class Moderation(commands.Cog):
                         colour=discord.Colour.blue()
                     )
                     embed.set_author(
-                        name=f"{user.name}'s waarschuwingen",
+                        name=f"{user.name}'s waarschuwing {number}",
                         icon_url=user.avatar_url
-                    )
-                    embed.add_field(
-                        name="Nummer",
-                        value=number,
-                        inline=False
                     )
                     embed.add_field(
                         name="Redenen",
@@ -77,7 +69,8 @@ class Moderation(commands.Cog):
                     )
                     embed.add_field(
                         name="Gegeven door",
-                        value=f"`{user_warnings['warnings'][number]['warner']}`"
+                        value=f"`{user_warnings['warnings'][number]['warner']}`",
+                        inline=False
                     )
                     embed.set_footer(
                         text=user_warnings["warnings"][number]["time"]
@@ -106,23 +99,22 @@ class Moderation(commands.Cog):
 
     # pardon command
     @commands.command()
-    @commands.has_permissions()
-    async def pardon(self, ctx, user: discord.User, warning):
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    async def pardon(self, ctx, user: discord.User, warning=None):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
         db = self.bot.get_cog("Database")
         output = await db.pardon(ctx.author, warning)
+        if warning is None:
+            return await ctx.send(embed=await embeds.explain(
+                "pardon",
+                "|`pardon @hope 1`| De 1 is de waarschuwing die je kan vinden door `warnings @hope` te doen"))
         if output:
             return await ctx.send(embed=await embeds.pardon(user))
         elif not output:
             return await ctx.send(embed=await embeds.nopardon())
         else:
             return await ctx.send(embed=await embeds.error())
-
-    @commands.command()
-    async def drop(self, ctx):
-        db = self.bot.get_cog("Database")
-        print(await db.drop())
 
 
 def setup(bot):

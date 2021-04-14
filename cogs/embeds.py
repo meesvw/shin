@@ -65,20 +65,6 @@ class Embeds(commands.Cog):
         )
         return embed
 
-    # returns warnings explanation
-    async def explain_warning(self):
-        embed = discord.Embed(
-            colour=discord.Colour.blue()
-        )
-        embed.set_author(
-            name="warnings mist iets"
-        )
-        embed.add_field(
-            name="uitleg `warnings`",
-            value="Het warnings command heeft een gebruiker nodig, voorbeeld: `warnings @mvw`"
-        )
-        return embed
-
     # returns pardon warning embed
     async def pardon(self, user):
         embed = discord.Embed(
@@ -101,8 +87,7 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name="Nummer correct?",
-            value="Voorbeeld: Tim heeft 3 warns, 1 is al verwijderd. "
-                  "Dan blijven warning 2 en 3 staan. Dan vul je voor warning 2 dus 2 in en voor warning 3, 3."
+            value="Zoek de warning met `warnings @hope`"
         )
         return embed
 
@@ -115,11 +100,11 @@ class Embeds(commands.Cog):
             colour=discord.Colour.blue()
         )
         embed.set_author(
-            name=f"{command} mist iets",
+            name="Command mist iets",
             icon_url=self.bot.user.avatar_url
         )
         embed.add_field(
-            name=f"uitleg `{command}`",
+            name=f"Hoe werkt `{command}`",
             value=uitleg
         )
         return embed
