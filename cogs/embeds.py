@@ -54,6 +54,17 @@ class Embeds(commands.Cog):
         )
         return embed
 
+    # returns short give warning embed
+    async def warning_short(self, user, warner):
+        embed = discord.Embed(
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{user.name} is gewaarshuwd door {warner.name}',
+            icon_url=user.avatar_url
+        )
+        return embed
+
     # returns warnings not found embed
     async def nowarning(self, user):
         embed = discord.Embed(

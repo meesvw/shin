@@ -25,6 +25,7 @@ class Moderation(commands.Cog):
                 await ctx.send(embed=await embeds.error())
                 break
             channel = self.bot.get_channel(719263750426984538)
+            await ctx.send(embed=await embeds.warning_short(user, ctx.author))
             await channel.send(embed=await embeds.warning(user, warning, ctx.author))
             print(f"{current_time()} - warn added to: {user.id} warning: {warning}")
 
