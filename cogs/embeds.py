@@ -77,7 +77,22 @@ class Embeds(commands.Cog):
         return embed
 
     # returns pardon warning embed
-    async def pardon(self, user):
+    async def pardon(self, user, vergever):
+        embed = discord.Embed(
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{user.name} is vergeven',
+            icon_url=user.avatar_url
+        )
+        embed.add_field(
+            name='Vergever',
+            value=f'`{vergever.name}`'
+        )
+        return embed
+
+    # returns short pardon warning embed
+    async def pardon_short(self, user):
         embed = discord.Embed(
             colour=discord.Colour.blue()
         )
@@ -103,6 +118,31 @@ class Embeds(commands.Cog):
         return embed
 
     # # ban embeds
+    # returns ban embed
+    async def ban(self, user, banner):
+        embed = discord.Embed(
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{user.name} is verbannen',
+            icon_url=user.avatar_url
+        )
+        embed.add_field(
+            name='Banner',
+            value=f'`{banner.name}`'
+        )
+        return embed
+
+    # return short ban embed
+    async def ban_short(self, user):
+        embed = discord.Embed(
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{user.name} is verbannen',
+            icon_url=user.avatar_url
+        )
+        return embed
 
     # # uitleg commands
     # command uitleg

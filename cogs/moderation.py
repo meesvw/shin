@@ -12,6 +12,7 @@ class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # # warning commands
     # warn command
     @commands.command()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
@@ -32,12 +33,12 @@ class Moderation(commands.Cog):
     # show warnings command
     @commands.command()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
-    async def warnings(self, ctx, user: discord.User = None):
+    async def warnings(self, ctx, warnings_user: discord.User=None):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
         db = self.bot.get_cog("Database")
-        if user:
-            user_warnings = await db.warnings(user)
+        if warnings_user:
+            user_warnings = await db.warnings(warnings_user)
         else:
             return await ctx.send(embed=await embeds.explain(
                 "warnings",
@@ -61,8 +62,8 @@ class Moderation(commands.Cog):
                         colour=discord.Colour.blue()
                     )
                     embed.set_author(
-                        name=f"{user.name}'s waarschuwing {number}/{len(dict_list)}",
-                        icon_url=user.avatar_url
+                        name=f"{warnings_user.name}'s waarschuwing {number}",
+                        icon_url=warnings_user.avatar_url
                     )
                     embed.add_field(
                         name="Redenen",
@@ -89,9 +90,9 @@ class Moderation(commands.Cog):
                         await message.delete()
                         break
             else:
-                return await ctx.send(embed=await embeds.nowarning(user))
+                return await ctx.send(embed=await embeds.nowarning(warnings_user))
         except TypeError:
-            return await ctx.send(embed=await embeds.nowarning(user))
+            return await ctx.send(embed=await embeds.nowarning(warnings_user))
 
     # pardon command
     @commands.command()
@@ -106,11 +107,26 @@ class Moderation(commands.Cog):
                 "pardon",
                 "|`pardon @hope 1`| De 1 is de waarschuwing die je kan vinden door `warnings @hope` te doen"))
         if output:
-            return await ctx.send(embed=await embeds.pardon(user))
+            channel = self.bot.get_channel(719263750426984538)
+            await channel.send(embed=await embeds.pardon(user, ctx.author))
+            return await ctx.send(embed=await embeds.pardon_short(user))
         elif not output:
             return await ctx.send(embed=await embeds.nopardon())
         else:
             return await ctx.send(embed=await embeds.error())
+
+    # # ban commands
+    # ban command
+    @commands.command()
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    async def ban(self, ctx, users: commands.Greedy[discord.User], *, reason=None):
+        db = self.bot.get_cog('Database')
+        embeds = self.bot.get_cog('Embeds')
+        # for user in users:
+        #     if reason is None:
+        #         reason = 'quick ban'
+        #     await ctx.guild.ban(user, reason=reason)
+        return
 
 
 def setup(bot):

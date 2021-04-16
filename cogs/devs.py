@@ -9,11 +9,18 @@ class Devs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # Drops all logs
+    # poke database
+    @commands.command()
+    @commands.check(is_mees)
+    async def poke(self, ctx):
+        db = self.bot.get_cog('Database')
+        return await ctx.send(await db.poke())
+
+    # drops all logs
     @commands.command()
     @commands.check(is_mees)
     async def drop(self, ctx):
-        db = self.bot.get_cog("Database")
+        db = self.bot.get_cog('Database')
         return await ctx.send(await db.drop())
 
 
