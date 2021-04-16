@@ -18,7 +18,7 @@ class Setup(commands.Cog):
                 )
             )
         channel = self.bot.get_channel(712680245114961943)
-        await channel.send(embed=await embeds.status_changed())
+        await channel.send(embed=await embeds.status_changed(ctx.author, status))
         return await ctx.send(embed=await embeds.status_changed_short())
 
 
