@@ -7,6 +7,32 @@ class Embeds(commands.Cog):
         self.bot = bot
 
     # # utility embeds
+    # returns status changed embed
+    async def status_changed(self, user, status):
+        embed = discord.Embed(
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{user.name} heeft status veranderd',
+            icon_url=user.avatar_url
+        )
+        embed.add_field(
+            name='Nieuwe status',
+            value=status
+        )
+        return embed
+
+    # returns short status changed embed
+    async def status_changed_short(self):
+        embed = discord.Embed(
+            colour=discord.Colour.green()
+        )
+        embed.set_author(
+            name='Mijn status is veranderd!',
+            icon_url=self.bot.user.avatar_url
+        )
+        return embed
+
     # returns loading embed
     async def loading(self):
         embed = discord.Embed(
