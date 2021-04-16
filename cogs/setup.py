@@ -11,10 +11,10 @@ class Setup(commands.Cog):
     async def status(self, ctx, option, *, status):
         embeds = self.bot.get_cog('Embeds')
         if option == 'watching':
-            await self.bot.change_precense(
+            await self.bot.change_presence(
                 activity=discord.Activity(
                     type=discord.ActivityType.watching,
-                    name=status
+                    name=str(status)
                 )
             )
         channel = self.bot.get_channel(712680245114961943)

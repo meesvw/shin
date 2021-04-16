@@ -28,8 +28,7 @@ class Embeds(commands.Cog):
             colour=discord.Colour.green()
         )
         embed.set_author(
-            name='Mijn status is veranderd!',
-            icon_url=self.bot.user.avatar_url
+            name='Mijn status is veranderd!'
         )
         return embed
 
