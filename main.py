@@ -6,6 +6,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 start_time = time.time()
+startup = True
 bot_location = f"{os.path.dirname(os.path.abspath(__file__))}/"
 load_dotenv()
 bot = commands.AutoShardedBot(
@@ -33,16 +34,15 @@ async def set_status():
 # on_ready event
 @bot.event
 async def on_ready():
-    await set_status()
+    global startup
+    if startup:
+        await set_status()
+        startup = False
     print(f"{current_time()} - {bot.user.name} connected to a shard")
 
 # # startup
 # print logo
-print("   __                ")
-print("  / /  ___  ___  ___ ")
-print(" / _ \/ _ \/ _ \/ -_)")
-print("/_//_/\___/ .__/\__/ ")
-print("         /_/         \n")
+print("_____________________")
 
 # check .env
 check = False

@@ -14,7 +14,7 @@ class Setup(commands.Cog):
             await self.bot.change_presence(
                 activity=discord.Activity(
                     type=discord.ActivityType.watching,
-                    name=str(status)
+                    name=status
                 )
             )
         channel = self.bot.get_channel(712680245114961943)

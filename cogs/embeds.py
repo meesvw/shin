@@ -7,6 +7,19 @@ class Embeds(commands.Cog):
         self.bot = bot
 
     # # utility embeds
+    # returns user avatar
+    async def user_avatar(self, user):
+        embed = discord.Embed(
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{user.name}\'s avatar'
+        )
+        embed.set_image(
+            url=user.avatar_url
+        )
+        return embed
+
     # returns status changed embed
     async def status_changed(self, user, status):
         embed = discord.Embed(

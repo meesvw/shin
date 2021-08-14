@@ -12,6 +12,14 @@ class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # # utility
+    # show avatar command
+    @commands.command()
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    async def avatar(self, ctx, user: discord.User):
+        embeds = self.bot.get_cog('Embeds')
+        return await ctx.send(embed=await embeds.user_avatar(user))
+
     # # warning commands
     # warn command
     @commands.command()
