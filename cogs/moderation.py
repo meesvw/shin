@@ -113,7 +113,7 @@ class Moderation(commands.Cog):
         if warning is None:
             return await ctx.send(embed=await embeds.explain(
                 "pardon",
-                "|`pardon @hope 1`| De 1 is de waarschuwing die je kan vinden door `warnings @hope` te doen"))
+                "|`!pardon @hope 1`| De 1 is de waarschuwing die je kan vinden door `!warnings @hope` te doen"))
         if output:
             channel = self.bot.get_channel(719263750426984538)
             await channel.send(embed=await embeds.pardon(user, ctx.author))

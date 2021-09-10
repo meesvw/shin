@@ -30,6 +30,9 @@ class Database(commands.Cog):
 
     # set user warning
     async def warn(self, user, warning, warner):
+        if warning is None:
+            warning = 'Geen redenen gegeven'
+
         try:
             db = client["logs"]
             cl = db["warnings"]

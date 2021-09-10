@@ -183,6 +183,31 @@ class Embeds(commands.Cog):
         return embed
 
     # # uitleg commands
+    # algemene help command
+    async def help(self):
+        embed = discord.Embed(
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(
+            name='Hier zijn alle commands!',
+            icon_url=self.bot.user.avatar_url
+        )
+        embed.add_field(
+            name='Moderatie (Alleen voor moderators)',
+            value=# '- !ban @gebruiker(s) redenen\n'
+                  # '- !kick @gebruiker(s) redenen\n'
+                  '- !warn @gebruiker(s) redenen\n'
+                  '- !pardon @gebruiker(s) redenen\n'
+                  '- !warnings @gebruiker',
+            inline=False
+        )
+        embed.add_field(
+            name='Bot aanpassen (Alleen voor moderators)',
+            value='- !status [een status]',
+            inline=False
+        )
+        return embed
+
     # command uitleg
     async def explain(self, command, uitleg):
         embed = discord.Embed(

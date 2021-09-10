@@ -11,9 +11,9 @@ bot_location = f"{os.path.dirname(os.path.abspath(__file__))}/"
 load_dotenv()
 bot = commands.AutoShardedBot(
     command_prefix=os.getenv("prefix"),
-    case_insensitive=True
+    case_insensitive=True,
+    help_command=None
 )
-
 
 # # functions
 # returns current time
@@ -38,6 +38,8 @@ async def on_ready():
     if startup:
         await set_status()
         startup = False
+        channel = bot.get_channel(750673492625588304)
+        await channel.send('Ik ben opgestart!')
     print(f"{current_time()} - {bot.user.name} connected to a shard")
 
 # # startup
