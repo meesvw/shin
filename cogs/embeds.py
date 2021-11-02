@@ -71,6 +71,126 @@ class Embeds(commands.Cog):
         )
         return embed
 
+    # # join/leave embeds
+    # returns join log
+    async def join_log(self, joiner):
+        embed = discord.Embed(
+            color=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=joiner.name,
+            icon_url=joiner.avatar_url
+        )
+        embed.set_footer(
+            text='Is de server gejoined'
+        )
+        return embed
+
+    # returns join dm
+    async def join_dm(self, joiner, toelater, channel):
+        embed = discord.Embed(
+            title=f'Hey {joiner.name}',
+            description=f'Welkom in Cosplayers from NL! Vergeet niet jezelf voor te stellen in {channel.mention}'
+                        f'We wensen je veel plezier! :heart:',
+            color=discord.Colour.blue()
+        )
+        embed.set_footer(
+            text=f'{toelater.name} heeft je toegang gegeven',
+            icon_url=toelater.avatar_url
+        )
+        return embed
+
+    # return leave embed
+    async def user_leave(self, leaver):
+        embed = discord.Embed(
+            color=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=leaver.name,
+            icon_url=leaver.avatar_url
+        )
+        embed.set_footer(
+            text='Heeft de server verlaten'
+        )
+        return embed
+
+    # # log embeds
+    # returns lobby cleared
+    async def lobby_cleared(self, clearer):
+        embed = discord.Embed(
+            title='Lobby leeggemaakt',
+            colour=discord.Colour.blue()
+        )
+        embed.add_field(
+            name='Leeggemaakt door:',
+            value=f'{clearer.name}'
+        )
+        return embed
+
+    # returns user toegelaten embed
+    async def toegang_gegeven(self, toelater, toegelaten):
+        embed = discord.Embed(
+            title='Gebruiker toegelaten',
+            colour=discord.Colour.blue(),
+        )
+        embed.add_field(
+            name='Toegelaten:',
+            value=f'{toegelaten.name}'
+        )
+        embed.add_field(
+            name='Toegelaten door:',
+            value=f'{toelater.name}'
+        )
+        return embed
+
+    # returns users geweigerd embed
+    async def toegang_geweigerd(self, weigeraar, geweigerde):
+        embed = discord.Embed(
+            title='Gebruiker geweigerd',
+            colour=discord.Colour.blue()
+        )
+        embed.add_field(
+            name='Geweigerd:',
+            value=f'{geweigerde.name}'
+        )
+        embed.add_field(
+            name='Geweigerd door:',
+            value=f'{weigeraar.name}'
+        )
+        return embed
+
+    # returns user muted embed
+    async def user_muted(self, muted, muter):
+        embed = discord.Embed(
+            title='Gebruiker gemute',
+            colour=discord.Colour.blue()
+        )
+        embed.add_field(
+            name='Gemute:',
+            value=f'{muted.name}'
+        )
+        embed.add_field(
+            name='Gemute door:',
+            value=f'{muter.name}'
+        )
+        return embed
+
+    # returns user unmuted embed
+    async def user_unmuted(self, muted, unmuter):
+        embed = discord.Embed(
+            title='Gebruiker unmuted',
+            colour=discord.Colour.blue()
+        )
+        embed.add_field(
+            name='Persoon unmuted:',
+            value=f'{muted.name}'
+        )
+        embed.add_field(
+            name='Unmuted door:',
+            value=f'{unmuter.name}'
+        )
+        return embed
+
     # # warning embeds
     # returns give warning embed
     async def warning(self, user, warning, warner):
@@ -155,9 +275,44 @@ class Embeds(commands.Cog):
         )
         return embed
 
+    # # kick embeds
+    # returns kick embed
+    async def kick(self, user, kicker, reason):
+        embed = discord.Embed(
+            color=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{user.name} is gekicked',
+            icon_url=user.avatar_url
+        )
+        embed.add_field(
+            name='Redenen',
+            value=reason
+        )
+        embed.add_field(
+            name='was lid sinds',
+            value=user.joined_at.strftime("%d %b %Y")
+        )
+        embed.set_footer(
+            text=f'Kicked door {kicker.name}{kicker.discriminator}',
+            icon_url=kicker.avatar_url
+        )
+        return embed
+
+    # return short kick embed
+    async def kick_short(self, user):
+        embed = discord.Embed(
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{user.name} is gekicked',
+            icon_url=user.avatar_url
+        )
+        return embed
+
     # # ban embeds
     # returns ban embed
-    async def ban(self, user, banner):
+    async def ban(self, user, banner, reason):
         embed = discord.Embed(
             colour=discord.Colour.blue()
         )
@@ -166,8 +321,16 @@ class Embeds(commands.Cog):
             icon_url=user.avatar_url
         )
         embed.add_field(
-            name='Banner',
-            value=f'`{banner.name}`'
+            name='Redenen',
+            value=reason
+        )
+        embed.add_field(
+            name='Was lid sinds',
+            value=user.joined_at.strftime("%d %b %Y")
+        )
+        embed.set_footer(
+            text=f'Verbannen door {banner.name}{banner.discriminator}',
+            icon_url=banner.avatar_url
         )
         return embed
 
@@ -193,12 +356,25 @@ class Embeds(commands.Cog):
             icon_url=self.bot.user.avatar_url
         )
         embed.add_field(
+            name='Fun',
+            value='- !hug @gebruiker\n'
+                  '- !pat @gebruiker\n'
+                  '- !wink @gebruiker\n',
+            inline=False
+        )
+        embed.add_field(
             name='Moderatie (Alleen voor moderators)',
-            value=# '- !ban @gebruiker(s) redenen\n'
-                  # '- !kick @gebruiker(s) redenen\n'
+            value='- !ban @gebruiker(s) redenen\n'
+                  '- !kick @gebruiker(s) redenen\n'
                   '- !warn @gebruiker(s) redenen\n'
                   '- !pardon @gebruiker(s) redenen\n'
-                  '- !warnings @gebruiker',
+                  '- !warnings @gebruiker\n'
+                  '- !mute @gebruiker\n'
+                  '- !unmute @gebruiker\n'
+                  '- !lobby HOEVEEL BERICHTEN'
+                  '- !welkom @gebruiker\n'
+                  '- !weiger @gebruiker\n'
+                  '- !avatar @gebruiker',
             inline=False
         )
         embed.add_field(
