@@ -132,7 +132,8 @@ class Embeds(commands.Cog):
             color=discord.Colour.blue(),
         )
         embed.set_author(
-            name=f'{toelater.name} heeft toegang gegeven aan: {toegelaten.name}'
+            name=f'{toelater.name} heeft toegang gegeven aan {toegelaten.name}',
+            icon_url=toelater.avatar_url
         )
         return embed
 
@@ -142,7 +143,7 @@ class Embeds(commands.Cog):
             color=discord.Colour.blue()
         )
         embed.set_author(
-            name=f'{weigeraar.name} heeft: {geweigerde.name} geweigerd',
+            name=f'{weigeraar.name} heeft {geweigerde.name} geweigerd',
             icon_url=weigeraar.avatar_url
         )
         return embed
@@ -154,7 +155,7 @@ class Embeds(commands.Cog):
             color=discord.Colour.blue()
         )
         embed.set_author(
-            name=f'{muter.name} heeft: {muted.name} gemute',
+            name=f'{muter.name} heeft {muted.name} gemute',
             icon_url=muter.avatar_url
         )
         return embed
@@ -176,7 +177,7 @@ class Embeds(commands.Cog):
             color=discord.Colour.blue()
         )
         embed.set_author(
-            name=f'{unmuter.name} heeft: {muted.name} geunmute',
+            name=f'{unmuter.name} heeft {muted.name} geunmute',
             icon_url=unmuter.avatar_url
         )
         return embed
@@ -219,7 +220,7 @@ class Embeds(commands.Cog):
             color=discord.Colour.blue()
         )
         embed.set_author(
-            name=f'{warner.name} heeft: {user.name} gewaarschuwd',
+            name=f'{warner.name} heeft {user.name} gewaarschuwd',
             icon_url=warner.avatar_url
         )
         return embed
@@ -241,7 +242,7 @@ class Embeds(commands.Cog):
             color=discord.Colour.blue()
         )
         embed.set_author(
-            name=f'{vergever.name} heeft: {user.name} vergeven'
+            name=f'{vergever.name} heeft {user.name} vergeven'
         )
         return embed
 

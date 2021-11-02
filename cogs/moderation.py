@@ -17,7 +17,7 @@ class Moderation(commands.Cog):
     # clear messages command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def clear(self, ctx, amount: int):
         if amount < 1:
             return await ctx.send(f'Hey {ctx.author.mention} ik heb een positief getal nodig!')
@@ -33,7 +33,7 @@ class Moderation(commands.Cog):
     # clear lobby command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def lobby(self, ctx):
         if ctx.channel.id != 696859692684541983:
             return await ctx.send(f'Hey {ctx.author.mention} dit is niet de lobby!')
@@ -59,7 +59,7 @@ class Moderation(commands.Cog):
     # show avatar command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def avatar(self, ctx, user: discord.User):
         embeds = self.bot.get_cog('Embeds')
         return await ctx.send(embed=await embeds.user_avatar(user))
@@ -68,7 +68,7 @@ class Moderation(commands.Cog):
     # welcome command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def welkom(self, ctx, user: discord.User):
         add_role = ctx.guild.get_role(668825700798693377)
         remove_role = ctx.guild.get_role(685607372428804104)
@@ -101,7 +101,7 @@ class Moderation(commands.Cog):
     # weiger command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def weiger(self, ctx, user: discord.User):
         role = ctx.guild.get_role(668825700798693377)
 
@@ -124,7 +124,7 @@ class Moderation(commands.Cog):
     # warn command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def warn(self, ctx, users: commands.Greedy[discord.User], *, warning=None):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
@@ -141,7 +141,7 @@ class Moderation(commands.Cog):
     # show warnings command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def warnings(self, ctx, warnings_user: discord.User=None):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
@@ -207,7 +207,7 @@ class Moderation(commands.Cog):
     # pardon command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def pardon(self, ctx, user: discord.User, warning=None):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
@@ -230,7 +230,7 @@ class Moderation(commands.Cog):
     # mute command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def mute(self, ctx, users: commands.Greedy[discord.User]):
         embeds = self.bot.get_cog('Embeds')
         add_role = ctx.guild.get_role(671073771246845960)
@@ -242,18 +242,19 @@ class Moderation(commands.Cog):
     # unmute command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def unmute(self, ctx, user: discord.User):
         embeds = self.bot.get_cog('Embeds')
         remove_role = ctx.guild.get_role(671073771246845960)
         await user.remove_roles(remove_role, reason=f'Unmuted door {ctx.author.name}')
+        await ctx.send(embed=await embeds.user_unmuted_short(user))
         await self.bot.get_channel(734365925620580402).send(embed=await embeds.user_unmuted(user, ctx.author))
 
     # # kick commands
     # kick command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def kick(self, ctx, users: commands.Greedy[discord.User], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
         if users is None:
@@ -305,7 +306,7 @@ class Moderation(commands.Cog):
     # geef verjaardag role command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def verjaardag(self, ctx, user: discord.User):
         if ctx.guild.get_role(670769561926369280) in user.roles:
             return await ctx.send(f'Hey {ctx.author.mention} deze persoon is al jarig!')
@@ -316,7 +317,7 @@ class Moderation(commands.Cog):
     # verwijder verjaardag role command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
     async def removeverjaardag(self, ctx, user: discord.User):
         if ctx.guild.get_role(670769561926369280) not in user.roles:
             return await ctx.send(f'Hey {ctx.author.mention} deze persoon is niet jarig!')
