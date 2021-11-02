@@ -247,12 +247,15 @@ class Moderation(commands.Cog):
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def kick(self, ctx, users: commands.Greedy[discord.User], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
+        if users is None:
+            return await ctx.send(embeds=await embeds.explain('!kick @gebruiker(s) redenen'))
+
         for user in users:
+            if user.bot:
+                return await ctx.send(f'{ctx.author.mention} je kan geen bots kicken')
+
             if user == ctx.author:
                 return await ctx.send(f'{ctx.author.mention} je kan jezelf niet kicken!')
-
-            if users is None:
-                return await ctx.send(embeds=await embeds.explain('!kick @gebruiker(s) redenen'))
 
             if reason is None:
                 reason = 'Geen redenen opgegeven'
@@ -273,6 +276,9 @@ class Moderation(commands.Cog):
             return await ctx.send(embeds=await embeds.explain('!ban @gebruiker(s) redenen'))
 
         for user in users:
+            if user.bot:
+                return await ctx.send(f'{ctx.author.mention} je kan geen bots kicken')
+
             if user == ctx.author:
                 return await ctx.send(f'{ctx.author.mention} je kan jezelf niet bannen!')
 
