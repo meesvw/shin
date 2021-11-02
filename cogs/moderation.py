@@ -11,7 +11,7 @@ def current_time():
 class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.log_channel = self.bot.get_channel(734365925620580402)
+        # self.log_channel = self.bot.get_channel(734365925620580402)
 
     # # utility
     # clear messages command
@@ -55,7 +55,7 @@ class Moderation(commands.Cog):
                                'vertellen waarom je de server bent gejoined! Als een moderator vindt dat jij niet past '
                                'bij onze server dan heeft de moderator het recht om jou te weigeren.')
         await message.pin()
-        await self.log_channel.send(embed=await embeds.lobby_cleared(ctx.author))
+        await self.bot.get_channel(734365925620580402).send(embed=await embeds.lobby_cleared(ctx.author))
 
     # show avatar command
     @commands.command()
@@ -94,7 +94,7 @@ class Moderation(commands.Cog):
         welcome_role = ctx.guild.get_role(701713402745323542)
         general_channel = self.bot.get_channel(671066993792647191)
 
-        await self.log_channel.send(embed=await embeds.toegang_gegeven(ctx.author, user))
+        await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_gegeven(ctx.author, user))
         await general_channel.send(f'{welcome_role.mention} Hiep hiep hoera, er is een nieuw lid bij genaamd {user.mention} 🎉')
 
     # weiger command
@@ -116,7 +116,7 @@ class Moderation(commands.Cog):
             await ctx.send(f'Hey {ctx.author.mention} ik kan deze gebruiker niet weigeren')
 
         embeds = self.bot.get_cog('Embeds')
-        await self.log_channel.send(embed=await embeds.toegang_geweigerd(ctx.author, user))
+        await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_geweigerd(ctx.author, user))
 
     # # warning commands
     # warn command
@@ -230,7 +230,7 @@ class Moderation(commands.Cog):
         add_role = ctx.guild.get_role(671073771246845960)
         for user in users:
             await user.add_roles(add_role, reason=f'Muted door {ctx.author.name}')
-            await self.log_channel.send(embed=await embeds.user_muted(user, ctx.author))
+            await self.bot.get_channel(734365925620580402).send(embed=await embeds.user_muted(user, ctx.author))
 
     # unmute command
     @commands.command()
@@ -239,7 +239,7 @@ class Moderation(commands.Cog):
         embeds = self.bot.get_cog('Embeds')
         remove_role = ctx.guild.get_role(671073771246845960)
         await user.remove_roles(remove_role, reason=f'Unmuted door {ctx.author.name}')
-        await self.log_channel.send(embed=await embeds.user_unmuted(user, ctx.author))
+        await self.bot.get_channel(734365925620580402).send(embed=await embeds.user_unmuted(user, ctx.author))
 
     # # kick commands
     # kick command
@@ -260,7 +260,7 @@ class Moderation(commands.Cog):
             if reason is None:
                 reason = 'Geen redenen opgegeven'
             await user.kick(reason=reason)
-            await self.log_channel.send(embed=await embeds.kick(user, ctx.author, reason))
+            await self.bot.get_channel(734365925620580402).send(embed=await embeds.kick(user, ctx.author, reason))
             await ctx.send(embed=await embeds.kick_short(user))
 
     # # ban commands
@@ -277,7 +277,7 @@ class Moderation(commands.Cog):
 
         for user in users:
             if user.bot:
-                return await ctx.send(f'{ctx.author.mention} je kan geen bots kicken')
+                return await ctx.send(f'{ctx.author.mention} je kan geen bots kicken!')
 
             if user == ctx.author:
                 return await ctx.send(f'{ctx.author.mention} je kan jezelf niet bannen!')

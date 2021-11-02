@@ -4,7 +4,6 @@ from datetime import datetime
 from discord.ext import commands
 from dotenv import load_dotenv
 
-startup = True
 bot_location = f'{os.path.dirname(os.path.abspath(__file__))}/'
 load_dotenv()
 bot = commands.AutoShardedBot(
@@ -33,17 +32,6 @@ async def set_status():
 # on_ready event
 @bot.event
 async def on_ready():
-    global startup
-    if startup:
-        await set_status()
-        startup = False
-        channel = bot.get_channel(750673492625588304)
-
-        try:
-            await channel.send('De server is opnieuw opgestart of Discord heeft mijn verbinding gereset!')
-        except AttributeError:
-            pass
-
     print(f'{current_time()} - {bot.user.name} connected to a shard')
 
 
