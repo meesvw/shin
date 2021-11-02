@@ -236,6 +236,7 @@ class Moderation(commands.Cog):
         add_role = ctx.guild.get_role(671073771246845960)
         for user in users:
             await user.add_roles(add_role, reason=f'Muted door {ctx.author.name}')
+            await ctx.send(embed=await embeds.user_muted_short(user))
             await self.bot.get_channel(734365925620580402).send(embed=await embeds.user_muted(user, ctx.author))
 
     # unmute command

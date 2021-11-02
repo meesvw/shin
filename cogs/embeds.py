@@ -147,35 +147,48 @@ class Embeds(commands.Cog):
         )
         return embed
 
+    # # mute embeds
     # returns user muted embed
     async def user_muted(self, muted, muter):
         embed = discord.Embed(
-            title='Gebruiker gemute',
             color=discord.Colour.blue()
         )
-        embed.add_field(
-            name='Gemute:',
-            value=f'{muted.name}'
+        embed.set_author(
+            name=f'{muter.name} heeft: {muted.name} gemute',
+            icon_url=muter.avatar_url
         )
-        embed.add_field(
-            name='Gemute door:',
-            value=f'{muter.name}'
+        return embed
+
+    # returns short user muted embed
+    async def user_muted_short(self, muted):
+        embed = discord.Embed(
+            color=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{muted.name} is gemute',
+            icon_url=muted.avatar_url
         )
         return embed
 
     # returns user unmuted embed
     async def user_unmuted(self, muted, unmuter):
         embed = discord.Embed(
-            title='Gebruiker unmuted',
             color=discord.Colour.blue()
         )
-        embed.add_field(
-            name='Persoon unmuted:',
-            value=f'{muted.name}'
+        embed.set_author(
+            name=f'{unmuter.name} heeft: {muted.name} geunmute',
+            icon_url=unmuter.avatar_url
         )
-        embed.add_field(
-            name='Unmuted door:',
-            value=f'{unmuter.name}'
+        return embed
+
+    # returns user short unmuted embed
+    async def user_unmuted_short(self, muted):
+        embed = discord.Embed(
+            color=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=f'{muted.name} is geunmute',
+            icon_url=muted.avatar_url
         )
         return embed
 
@@ -206,8 +219,8 @@ class Embeds(commands.Cog):
             color=discord.Colour.blue()
         )
         embed.set_author(
-            name=f'{user.name} is gewaarshuwd door {warner.name}',
-            icon_url=user.avatar_url
+            name=f'{warner.name} heeft: {user.name} gewaarschuwd',
+            icon_url=warner.avatar_url
         )
         return embed
 
@@ -228,12 +241,7 @@ class Embeds(commands.Cog):
             color=discord.Colour.blue()
         )
         embed.set_author(
-            name=f'{user.name} is vergeven',
-            icon_url=user.avatar_url
-        )
-        embed.add_field(
-            name='Vergever',
-            value=f'`{vergever.name}`'
+            name=f'{vergever.name} heeft: {user.name} vergeven'
         )
         return embed
 
@@ -315,7 +323,8 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name='Was lid sinds',
-            value=user.joined_at.strftime("%d %b %Y")
+            value=user.joined_at.strftime("%d %b %Y"),
+            inline=False
         )
         embed.set_footer(
             text=f'Verbannen door {banner.name}{banner.discriminator}',
