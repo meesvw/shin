@@ -278,8 +278,9 @@ class Embeds(commands.Cog):
             value=reason
         )
         embed.add_field(
-            name='was lid sinds',
-            value=user.joined_at.strftime("%d %b %Y")
+            name='Was lid sinds',
+            value=user.joined_at.strftime("%d %b %Y"),
+            inline=False
         )
         embed.set_footer(
             text=f'Kicked door {kicker.name}{kicker.discriminator}',

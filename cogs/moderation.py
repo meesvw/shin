@@ -266,7 +266,7 @@ class Moderation(commands.Cog):
                 return await ctx.send(f'{ctx.author.mention} je kan jezelf niet kicken!')
 
             if reason is None:
-                reason = 'Geen redenen opgegeven'
+                reason = 'Geen redenen opgegeven.'
 
             await user.kick(reason=reason)
             await self.bot.get_channel(734365925620580402).send(embed=await embeds.kick(user, ctx.author, reason))
@@ -279,7 +279,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Dev Team')
     async def ban(self, ctx, users: commands.Greedy[discord.User], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
-        channel = self.bot.get_channel(829743018953277480)
+        log_channel = self.bot.get_channel(744259944760737795)
         community_channel = self.bot.get_channel(717814933705982083)
 
         if users is None:
@@ -293,10 +293,10 @@ class Moderation(commands.Cog):
                 return await ctx.send(f'{ctx.author.mention} je kan jezelf niet bannen!')
 
             if reason is None:
-                reason = 'Geen redenen opgegeven'
+                reason = 'Geen redenen opgegeven.'
 
             await user.ban(reason=reason)
-            await channel.send(embed=await embeds.ban(user, ctx.author, reason))
+            await log_channel.send(embed=await embeds.ban(user, ctx.author, reason))
             await ctx.send(embed=await embeds.ban_short(user))
             await community_channel.send(f'{user.name}{user.discriminator}')
 
