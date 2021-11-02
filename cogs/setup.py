@@ -9,7 +9,7 @@ class Setup(commands.Cog):
     @commands.group()
     async def help(self, ctx):
         embeds = self.bot.get_cog('Embeds')
-        await ctx.send(f'{ctx.author.mention} ik heb je een DM gestuurd!')
+        await ctx.send(f':mailbox_with_mail: {ctx.author.mention} ik heb je een DM gestuurd!')
         return await ctx.author.send(embed=await embeds.help())
 
     @commands.command()

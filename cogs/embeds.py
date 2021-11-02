@@ -10,7 +10,7 @@ class Embeds(commands.Cog):
     # returns user avatar
     async def user_avatar(self, user):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f'{user.name}\'s avatar'
@@ -23,7 +23,7 @@ class Embeds(commands.Cog):
     # returns status changed embed
     async def status_changed(self, user, status):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f'{user.name} heeft status veranderd',
@@ -38,7 +38,7 @@ class Embeds(commands.Cog):
     # returns short status changed embed
     async def status_changed_short(self):
         embed = discord.Embed(
-            colour=discord.Colour.green()
+            color=discord.Colour.green()
         )
         embed.set_author(
             name='Mijn status is veranderd!'
@@ -48,7 +48,7 @@ class Embeds(commands.Cog):
     # returns loading embed
     async def loading(self):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name="Bereid wat dingen voor!",
@@ -59,7 +59,7 @@ class Embeds(commands.Cog):
     # returns error embed
     async def error(self):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f"oops iets ging verkeerd..",
@@ -139,16 +139,11 @@ class Embeds(commands.Cog):
     # returns users geweigerd embed
     async def toegang_geweigerd(self, weigeraar, geweigerde):
         embed = discord.Embed(
-            title='Gebruiker geweigerd',
             color=discord.Colour.blue()
         )
-        embed.add_field(
-            name='Geweigerd:',
-            value=f'{geweigerde.name}'
-        )
-        embed.add_field(
-            name='Geweigerd door:',
-            value=f'{weigeraar.name}'
+        embed.set_author(
+            name=f'{weigeraar.name} heeft: {geweigerde.name} geweigerd',
+            icon_url=weigeraar.avatar_url
         )
         return embed
 
@@ -172,7 +167,7 @@ class Embeds(commands.Cog):
     async def user_unmuted(self, muted, unmuter):
         embed = discord.Embed(
             title='Gebruiker unmuted',
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.add_field(
             name='Persoon unmuted:',
@@ -188,7 +183,7 @@ class Embeds(commands.Cog):
     # returns give warning embed
     async def warning(self, user, warning, warner):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f"{user.name} is gewaarschuwd",
@@ -208,7 +203,7 @@ class Embeds(commands.Cog):
     # returns short give warning embed
     async def warning_short(self, user, warner):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f'{user.name} is gewaarshuwd door {warner.name}',
@@ -219,7 +214,7 @@ class Embeds(commands.Cog):
     # returns warnings not found embed
     async def nowarning(self, user):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f"{user.name} heeft geen waarschuwingen",
@@ -230,7 +225,7 @@ class Embeds(commands.Cog):
     # returns pardon warning embed
     async def pardon(self, user, vergever):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f'{user.name} is vergeven',
@@ -245,7 +240,7 @@ class Embeds(commands.Cog):
     # returns short pardon warning embed
     async def pardon_short(self, user):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f"{user.name} is vergeven",
@@ -256,7 +251,7 @@ class Embeds(commands.Cog):
     # returns pardon not found embed
     async def nopardon(self):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name="Waarschuwing niet gevonden",
@@ -295,7 +290,7 @@ class Embeds(commands.Cog):
     # return short kick embed
     async def kick_short(self, user):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f'{user.name} is gekicked',
@@ -307,7 +302,7 @@ class Embeds(commands.Cog):
     # returns ban embed
     async def ban(self, user, banner, reason):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f'{user.name} is verbannen',
@@ -330,7 +325,7 @@ class Embeds(commands.Cog):
     # return short ban embed
     async def ban_short(self, user):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name=f'{user.name} is verbannen',
@@ -342,7 +337,7 @@ class Embeds(commands.Cog):
     # algemene help command
     async def help(self):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name='Hier zijn alle commands!',
@@ -364,7 +359,7 @@ class Embeds(commands.Cog):
                   '- !warnings @gebruiker\n'
                   '- !mute @gebruiker\n'
                   '- !unmute @gebruiker\n'
-                  '- !lobby'
+                  '- !lobby\n'
                   '- !welkom @gebruiker\n'
                   '- !weiger @gebruiker\n'
                   '- !avatar @gebruiker',
@@ -380,7 +375,7 @@ class Embeds(commands.Cog):
     # command uitleg
     async def explain(self, command, uitleg):
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.set_author(
             name="Command mist iets",

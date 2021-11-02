@@ -267,6 +267,7 @@ class Moderation(commands.Cog):
 
             if reason is None:
                 reason = 'Geen redenen opgegeven'
+
             await user.kick(reason=reason)
             await self.bot.get_channel(734365925620580402).send(embed=await embeds.kick(user, ctx.author, reason))
             await ctx.send(embed=await embeds.kick_short(user))
@@ -293,6 +294,7 @@ class Moderation(commands.Cog):
 
             if reason is None:
                 reason = 'Geen redenen opgegeven'
+
             await user.ban(reason=reason)
             await channel.send(embed=await embeds.ban(user, ctx.author, reason))
             await ctx.send(embed=await embeds.ban_short(user))
@@ -304,7 +306,22 @@ class Moderation(commands.Cog):
     @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def verjaardag(self, ctx, user: discord.User):
-        return
+        if ctx.guild.get_role(670769561926369280) in user.roles:
+            return await ctx.send(f'Hey {ctx.author.mention} deze persoon is al jarig!')
+
+        await user.add_roles(ctx.guild.get_role(670769561926369280))
+        await ctx.send(f'{ctx.auhtor.mention} {user.name} is jarig!')
+
+    # verwijder verjaardag role command
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    async def removeverjaardag(self, ctx, user: discord.User):
+        if ctx.guild.get_role(670769561926369280) not in user.roles:
+            return await ctx.send(f'Hey {ctx.author.mention} deze persoon is niet jarig!')
+
+        await user.remove_roles(ctx.guild.get_role(670769561926369280))
+        await ctx.send(f'{ctx.auhtor.mention} {user.name} is niet meer jarig!')
 
 
 def setup(bot):

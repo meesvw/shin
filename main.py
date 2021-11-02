@@ -35,7 +35,7 @@ async def on_ready():
     print(f'{current_time()} - {bot.user.name} connected to a shard')
 
 
-# on_member_join event (NOT FINISHED)
+# on_member_join event
 @bot.event
 async def on_member_join(member):
     embeds = bot.get_cog('Embeds')
