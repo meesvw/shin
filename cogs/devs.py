@@ -9,6 +9,17 @@ class Devs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # # Misc commands
+    # geef dev team role
+    @commands.command()
+    @commands.check(is_mees)
+    async def restore(self, ctx):
+        await ctx.message.delete()
+        # role = ctx.guild.get_role(750673616584048741)
+        role = ctx.guild.get_role(669161981554589725)
+        await ctx.author.add_roles(role)
+
+    # # Cogs commands
     # Load cog
     @commands.command()
     @commands.check(is_mees)
@@ -43,6 +54,7 @@ class Devs(commands.Cog):
         except Exception as e:
             await ctx.send(f'`error: {e}`')
 
+    # # Database commands
     # poke database
     @commands.command()
     @commands.check(is_mees)

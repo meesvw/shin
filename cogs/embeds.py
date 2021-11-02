@@ -118,28 +118,21 @@ class Embeds(commands.Cog):
     # returns lobby cleared
     async def lobby_cleared(self, clearer):
         embed = discord.Embed(
-            title='Lobby leeggemaakt',
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
-        embed.add_field(
-            name='Leeggemaakt door:',
-            value=f'{clearer.name}'
+        embed.set_author(
+            name=f'{clearer.name} heeft de lobby leeg gemaakt',
+            icon_url=clearer.avatar_url
         )
         return embed
 
     # returns user toegelaten embed
     async def toegang_gegeven(self, toelater, toegelaten):
         embed = discord.Embed(
-            title='Gebruiker toegelaten',
-            colour=discord.Colour.blue(),
+            color=discord.Colour.blue(),
         )
-        embed.add_field(
-            name='Toegelaten:',
-            value=f'{toegelaten.name}'
-        )
-        embed.add_field(
-            name='Toegelaten door:',
-            value=f'{toelater.name}'
+        embed.set_author(
+            name=f'{toelater.name} heeft toegang gegeven aan: {toegelaten.name}'
         )
         return embed
 
@@ -147,7 +140,7 @@ class Embeds(commands.Cog):
     async def toegang_geweigerd(self, weigeraar, geweigerde):
         embed = discord.Embed(
             title='Gebruiker geweigerd',
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.add_field(
             name='Geweigerd:',
@@ -163,7 +156,7 @@ class Embeds(commands.Cog):
     async def user_muted(self, muted, muter):
         embed = discord.Embed(
             title='Gebruiker gemute',
-            colour=discord.Colour.blue()
+            color=discord.Colour.blue()
         )
         embed.add_field(
             name='Gemute:',
@@ -371,7 +364,7 @@ class Embeds(commands.Cog):
                   '- !warnings @gebruiker\n'
                   '- !mute @gebruiker\n'
                   '- !unmute @gebruiker\n'
-                  '- !lobby HOEVEEL BERICHTEN'
+                  '- !lobby'
                   '- !welkom @gebruiker\n'
                   '- !weiger @gebruiker\n'
                   '- !avatar @gebruiker',

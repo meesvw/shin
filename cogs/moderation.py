@@ -16,6 +16,7 @@ class Moderation(commands.Cog):
     # # utility
     # clear messages command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def clear(self, ctx, amount: int):
         if amount < 1:
@@ -31,17 +32,15 @@ class Moderation(commands.Cog):
 
     # clear lobby command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
-    async def lobby(self, ctx, amount: int):
+    async def lobby(self, ctx):
         if ctx.channel.id != 696859692684541983:
             return await ctx.send(f'Hey {ctx.author.mention} dit is niet de lobby!')
 
-        if amount < 1:
-            return await ctx.send(f'Hey {ctx.author.mention} ik heb een positief getal nodig!')
-
         embeds = self.bot.get_cog('Embeds')
 
-        await ctx.channel.purge(limit=amount+1)
+        await ctx.channel.purge(limit=100)
         message = await ctx.channel.send('**Waarom zie ik zo weinig kanalen ?**\n'
                                'Dat komt omdat je momenteel niet geverifieerd bent. '
                                'Toegang tot de rest van de server / kanalen wordt verleend na ontvangst van de '
@@ -59,6 +58,7 @@ class Moderation(commands.Cog):
 
     # show avatar command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def avatar(self, ctx, user: discord.User):
         embeds = self.bot.get_cog('Embeds')
@@ -67,6 +67,7 @@ class Moderation(commands.Cog):
     # # welcome commands
     # welcome command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def welkom(self, ctx, user: discord.User):
         add_role = ctx.guild.get_role(668825700798693377)
@@ -99,6 +100,7 @@ class Moderation(commands.Cog):
 
     # weiger command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def weiger(self, ctx, user: discord.User):
         role = ctx.guild.get_role(668825700798693377)
@@ -121,6 +123,7 @@ class Moderation(commands.Cog):
     # # warning commands
     # warn command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def warn(self, ctx, users: commands.Greedy[discord.User], *, warning=None):
         await ctx.message.delete()
@@ -137,6 +140,7 @@ class Moderation(commands.Cog):
 
     # show warnings command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def warnings(self, ctx, warnings_user: discord.User=None):
         await ctx.message.delete()
@@ -202,6 +206,7 @@ class Moderation(commands.Cog):
 
     # pardon command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def pardon(self, ctx, user: discord.User, warning=None):
         await ctx.message.delete()
@@ -224,6 +229,7 @@ class Moderation(commands.Cog):
     # # mute commands
     # mute command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def mute(self, ctx, users: commands.Greedy[discord.User]):
         embeds = self.bot.get_cog('Embeds')
@@ -234,6 +240,7 @@ class Moderation(commands.Cog):
 
     # unmute command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def unmute(self, ctx, user: discord.User):
         embeds = self.bot.get_cog('Embeds')
@@ -244,6 +251,7 @@ class Moderation(commands.Cog):
     # # kick commands
     # kick command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def kick(self, ctx, users: commands.Greedy[discord.User], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
@@ -266,6 +274,7 @@ class Moderation(commands.Cog):
     # # ban commands
     # ban command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Dev Team')
     async def ban(self, ctx, users: commands.Greedy[discord.User], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
@@ -292,6 +301,7 @@ class Moderation(commands.Cog):
     # # verjaardag commands
     # geef verjaardag role command
     @commands.command()
+    @commands.guild_only()
     @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
     async def verjaardag(self, ctx, user: discord.User):
         return
