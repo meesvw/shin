@@ -5,6 +5,11 @@ class Channels(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # Voegt mensen toe aan een provincie kanaal
+    @commands.command()
+    async def provincie(self, ctx):
+        return
+
     # Voegt mensen toe aan de NSFW channel
     @commands.command()
     async def nsfw(self, ctx):

@@ -248,6 +248,12 @@ class Moderation(commands.Cog):
     async def kick(self, ctx, users: commands.Greedy[discord.User], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
         for user in users:
+            if user == ctx.author:
+                return await ctx.send(f'{ctx.author.mention} je kan jezelf niet kicken!')
+
+            if users is None:
+                return await ctx.send(embeds=await embeds.explain('!kick @gebruiker(s) redenen'))
+
             if reason is None:
                 reason = 'Geen redenen opgegeven'
             await user.kick(reason=reason)
@@ -263,13 +269,26 @@ class Moderation(commands.Cog):
         channel = self.bot.get_channel(829743018953277480)
         community_channel = self.bot.get_channel(717814933705982083)
 
+        if users is None:
+            return await ctx.send(embeds=await embeds.explain('!ban @gebruiker(s) redenen'))
+
         for user in users:
+            if user == ctx.author:
+                return await ctx.send(f'{ctx.author.mention} je kan jezelf niet bannen!')
+
             if reason is None:
                 reason = 'Geen redenen opgegeven'
             await user.ban(reason=reason)
             await channel.send(embed=await embeds.ban(user, ctx.author, reason))
             await ctx.send(embed=await embeds.ban_short(user))
             await community_channel.send(f'{user.name}{user.discriminator}')
+
+    # # verjaardag commands
+    # geef verjaardag role command
+    @commands.command()
+    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trail-Yuuto', 'Dev Team')
+    async def verjaardag(self, ctx, user: discord.User):
+        return
 
 
 def setup(bot):
