@@ -56,7 +56,7 @@ async def on_member_join(member):
 @bot.event
 async def on_member_remove(member):
     embeds = bot.get_cog('Embeds')
-    await bot.get_channel(734078899297714216).send(embed=await embeds.user_leave(member))
+    await bot.get_channel(734078899297714216).send(embed=await embeds.leave_log(member))
 
 
 # on_command_error event
