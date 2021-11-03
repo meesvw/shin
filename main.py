@@ -35,27 +35,6 @@ async def on_ready():
     print(f'{current_time()} - {bot.user.name} connected to a shard')
 
 
-# on_member_join event
-@bot.event
-async def on_member_join(member):
-    embeds = bot.get_cog('Embeds')
-    await member.add_roles(
-        member.guild.get_role(669889906071437332),
-        member.guild.get_role(669890055472414736),
-        member.guild.get_role(685607372428804104),
-        reason='Joined server'
-    )
-    await bot.get_channel(722771390092279819).send(embed=await embeds.join_log(member))
-    await member.send(embed=await embeds.join_dm(member))
-
-
-# on_member_remove event
-@bot.event
-async def on_member_remove(member):
-    embeds = bot.get_cog('Embeds')
-    await bot.get_channel(734078899297714216).send(embed=await embeds.user_leave(member))
-
-
 # on_command_error event
 @bot.event
 async def on_command_error(ctx, error):
@@ -90,6 +69,18 @@ for file in os.listdir(f'{bot_location}cogs'):
             bot.load_extension(f'cogs.{file[:-3]}')
         except Exception as e:
             print(f'{current_time()} - Error loading: {file[:-3]} || {e}')
+
+# print logo
+print(
+    """
+ _____ _     _       
+/  ___| |   (_)      
+\ `--.| |__  _ _ __  
+ `--. \ '_ \| | '_ \ 
+/\__/ / | | | | | | |
+\____/|_| |_|_|_| |_|
+    """
+)
 
 # start bot
 bot.run(os.getenv('token'))

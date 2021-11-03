@@ -101,7 +101,7 @@ class Embeds(commands.Cog):
         return embed
 
     # return leave embed
-    async def user_leave(self, leaver):
+    async def leave_log(self, leaver):
         embed = discord.Embed(
             color=discord.Colour.blue()
         )
