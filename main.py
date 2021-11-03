@@ -6,10 +6,13 @@ from dotenv import load_dotenv
 
 bot_location = f'{os.path.dirname(os.path.abspath(__file__))}/'
 load_dotenv()
+intents = discord.Intents.default()
+intents.members = True
 bot = commands.AutoShardedBot(
     command_prefix=os.getenv('prefix'),
     case_insensitive=True,
-    help_command=None
+    help_command=None,
+    intents=intents
 )
 
 
