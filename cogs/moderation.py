@@ -142,7 +142,7 @@ class Moderation(commands.Cog):
                             f'\nhttps://discord.gg/AjHwdycCkh')
             await user.kick(reason='Geweigerd voor de server')
         else:
-            await ctx.send(f'Hey {ctx.author.mention} ik kan deze gebruiker niet weigeren')
+            return await ctx.send(f'Hey {ctx.author.mention} ik kan deze gebruiker niet weigeren')
 
         embeds = self.bot.get_cog('Embeds')
         await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_geweigerd(ctx.author, user))
