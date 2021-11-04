@@ -4,6 +4,9 @@ from datetime import datetime
 from discord.ext import commands
 from dotenv import load_dotenv
 
+# mark bot as running for panel
+print('started')
+
 bot_location = f'{os.path.dirname(os.path.abspath(__file__))}/'
 load_dotenv()
 intents = discord.Intents.default()
@@ -97,8 +100,7 @@ for file in os.listdir(f'{bot_location}cogs'):
         except Exception as e:
             print(f'{current_time()} - Error loading: {file[:-3]} || {e}')
 
-# print startup
-print('started')
+# print logo
 print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
 print(
     """
