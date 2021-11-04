@@ -103,14 +103,39 @@ class Embeds(commands.Cog):
     # return leave embed
     async def leave_log(self, leaver):
         embed = discord.Embed(
-            color=discord.Colour.blue()
+            color=discord.Colour.red()
         )
         embed.set_author(
-            name=leaver.name,
+            name="Left | " + leaver.name + leaver.discriminator,
             icon_url=leaver.avatar_url
         )
-        embed.set_footer(
-            text='Heeft de server verlaten'
+        embed.add_field(
+            name="Gebruiker: " + leaver.name + leaver.discriminator,
+            value=leaver.mention,
+            inline=False
+        )
+        embed.add_field(
+            name="Gebruiker-ID: ",
+            value=leaver.id,
+            inline=False
+        )
+        embed.add_field(
+            name="Account is gemaakt op:",
+            value=leaver.created_at,
+            inline=False
+        )
+        embed.add_field(
+            name="Join datum::",
+            value=leaver.joined_at,
+            inline=False
+        )
+        embed.add_field(
+            name="Aantal leden:",
+            value=leaver.guild.member_count,
+            inline=False
+        )
+        embed.set_image(
+            leaver.avatar_url
         )
         return embed
 
