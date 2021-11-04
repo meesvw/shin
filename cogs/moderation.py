@@ -89,7 +89,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def welkom(self, ctx, user: discord.User):
+    async def welkom(self, ctx, user: discord.Member):
         await ctx.message.delete()
 
         add_role = ctx.guild.get_role(668825700798693377)
@@ -112,7 +112,7 @@ class Moderation(commands.Cog):
 
         embeds = self.bot.get_cog('Embeds')
 
-        await user.send(embed=await embeds.join_dm(user, ctx.author, introductie_channel))
+        await user.send(embed=await embeds.welcome_dm(user, ctx.author, introductie_channel))
 
         welcome_role = ctx.guild.get_role(701713402745323542)
         general_channel = self.bot.get_channel(671066993792647191)
@@ -281,7 +281,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def unmute(self, ctx, user: discord.User):
+    async def unmute(self, ctx, user: discord.Member):
         await ctx.message.delete()
 
         embeds = self.bot.get_cog('Embeds')
@@ -356,7 +356,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def verjaardag(self, ctx, user: discord.User):
+    async def verjaardag(self, ctx, user: discord.Member):
         if ctx.guild.get_role(670769561926369280) in user.roles:
             return await ctx.send(f'Hey {ctx.author.mention} deze persoon is al jarig!')
 
@@ -369,7 +369,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def removeverjaardag(self, ctx, user: discord.User):
+    async def removeverjaardag(self, ctx, user: discord.Member):
         if ctx.guild.get_role(670769561926369280) not in user.roles:
             return await ctx.send(f'Hey {ctx.author.mention} deze persoon is niet jarig!')
 

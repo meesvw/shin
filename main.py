@@ -40,7 +40,7 @@ async def on_ready():
 
 # on_member_join event
 @bot.event
-async def on_member_join(member: discord.Member):
+async def on_member_join(member):
     embeds = bot.get_cog('Embeds')
     await member.add_roles(
         member.guild.get_role(669889906071437332),
@@ -49,8 +49,11 @@ async def on_member_join(member: discord.Member):
         reason='Joined server'
     )
     await bot.get_channel(722771390092279819).send(embed=await embeds.join_log(member))
-    await bot.get_channel(696859692684541983).send("Welkom " + member.mention + "! Lees alvast de <#669161755972206629> en selecteer je <#701131739715600436>, een <@&669371769672564776> komt je zo snel mogelijk helpen! <:KellyHappyMood:720436790913269802>")
-    #await member.send(embed=await embeds.join_dm(member)) <- deze hoort pas na verwelkoming gecalled te worden?
+    await bot.get_channel(696859692684541983).send(
+        f'Welkom {member.mention}! Lees alvast de <#669161755972206629> en selecteer je <#701131739715600436>, '
+        f'een <@&669371769672564776> komt je zo snel mogelijk helpen! <:KellyHappyMood:720436790913269802>'
+    )
+    await member.send(embed=await embeds.join_dm(member))
 
 
 # on_member_remove event

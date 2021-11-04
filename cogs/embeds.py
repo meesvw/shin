@@ -106,8 +106,8 @@ class Embeds(commands.Cog):
         )
         return embed
 
-    # returns join dm
-    async def join_dm(self, joiner, toelater, channel):
+    # returns welcome dm
+    async def welcome_dm(self, joiner, toelater, channel):
         embed = discord.Embed(
             title=f'Hey {joiner.name}',
             description=f'Welkom in Cosplayers from NL! Vergeet niet jezelf voor te stellen in {channel.mention}'
