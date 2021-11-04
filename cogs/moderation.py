@@ -127,7 +127,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def weiger(self, ctx, user: discord.User):
+    async def weiger(self, ctx, user: discord.Member):
         await ctx.message.delete()
 
         role = ctx.guild.get_role(668825700798693377)
@@ -300,7 +300,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def kick(self, ctx, users: commands.Greedy[discord.User], *, reason=None):
+    async def kick(self, ctx, users: commands.Greedy[discord.Member], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
         if users is None:
             return await ctx.send(embeds=await embeds.explain('!kick @gebruiker(s) redenen'))
