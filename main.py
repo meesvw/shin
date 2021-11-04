@@ -97,7 +97,9 @@ for file in os.listdir(f'{bot_location}cogs'):
         except Exception as e:
             print(f'{current_time()} - Error loading: {file[:-3]} || {e}')
 
-# print logo
+# print startup
+print('started')
+print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
 print(
     """
  _____ _     _       
