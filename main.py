@@ -53,7 +53,6 @@ async def on_member_join(member):
         f'Welkom {member.mention}! Lees alvast de <#669161755972206629> en selecteer je <#701131739715600436>, '
         f'een <@&669371769672564776> komt je zo snel mogelijk helpen! <:KellyHappyMood:720436790913269802>'
     )
-    await member.send(embed=await embeds.join_dm(member))
 
 
 # on_member_remove event
