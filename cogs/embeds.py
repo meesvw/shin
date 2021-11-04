@@ -78,11 +78,11 @@ class Embeds(commands.Cog):
             color=discord.Colour.green()
         )
         embed.set_author(
-            name="Join | " + joiner.name + joiner.discriminator,
+            name="Join | " + joiner.name + "#" + joiner.discriminator,
             icon_url=joiner.avatar_url
         )
         embed.add_field(
-            name="Gebruiker: " + joiner.name + joiner.discriminator,
+            name="Gebruiker: " + joiner.name + "#" + joiner.discriminator,
             value=joiner.mention,
             inline=False
         )
@@ -101,7 +101,7 @@ class Embeds(commands.Cog):
             value=joiner.guild.member_count,
             inline=False
         )
-        embed.set_image(
+        embed.set_thumbnail(
             url=joiner.avatar_url
         )
         return embed
@@ -126,11 +126,11 @@ class Embeds(commands.Cog):
             color=discord.Colour.red()
         )
         embed.set_author(
-            name="Left | " + leaver.name + leaver.discriminator,
+            name="Left | " + leaver.name + "#" + leaver.discriminator,
             icon_url=leaver.avatar_url
         )
         embed.add_field(
-            name="Gebruiker: " + leaver.name + leaver.discriminator,
+            name="Gebruiker: " + leaver.name + "#" + leaver.discriminator,
             value=leaver.mention,
             inline=False
         )
@@ -154,7 +154,7 @@ class Embeds(commands.Cog):
             value=leaver.guild.member_count,
             inline=False
         )
-        embed.set_image(
+        embed.set_thumbnail(
             url=leaver.avatar_url
         )
         return embed
