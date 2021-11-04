@@ -75,14 +75,34 @@ class Embeds(commands.Cog):
     # returns join log
     async def join_log(self, joiner):
         embed = discord.Embed(
-            color=discord.Colour.blue()
+            color=discord.Colour.green()
         )
         embed.set_author(
-            name=joiner.name,
+            name="Join | " + joiner.name + joiner.discriminator,
             icon_url=joiner.avatar_url
         )
-        embed.set_footer(
-            text='Is de server gejoined'
+        embed.add_field(
+            name="Gebruiker: " + joiner.name + joiner.discriminator,
+            value=joiner.mention,
+            inline=False
+        )
+        embed.add_field(
+            name="Gebruiker-ID: ",
+            value=joiner.id,
+            inline=False
+        )
+        embed.add_field(
+            name="Account is gemaakt op:",
+            value=joiner.created_at,
+            inline=False
+        )
+        embed.add_field(
+            name="Aantal leden:",
+            value=joiner.guild.member_count,
+            inline=False
+        )
+        embed.set_image(
+            joiner.avatar_url
         )
         return embed
 
