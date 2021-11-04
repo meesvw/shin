@@ -102,7 +102,7 @@ class Embeds(commands.Cog):
             inline=False
         )
         embed.set_image(
-            joiner.avatar_url
+            url=joiner.avatar_url
         )
         return embed
 
@@ -155,7 +155,7 @@ class Embeds(commands.Cog):
             inline=False
         )
         embed.set_image(
-            leaver.avatar_url
+            url=leaver.avatar_url
         )
         return embed
 
