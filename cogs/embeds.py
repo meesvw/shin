@@ -88,7 +88,7 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name="Gebruiker-ID: ",
-            value=joiner.id,
+            value=f'`{joiner.id}`',
             inline=False
         )
         embed.add_field(
@@ -136,7 +136,7 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name="Gebruiker-ID: ",
-            value=leaver.id,
+            value=f'`{leaver.id}`',
             inline=False
         )
         embed.add_field(
