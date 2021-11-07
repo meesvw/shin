@@ -93,7 +93,7 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name="Account is gemaakt op:",
-            value=joiner.created_at,
+            value=joiner.created_at.strftime('%d/%m/%Y %H:%M:%S'),
             inline=False
         )
         embed.add_field(
@@ -141,12 +141,12 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name="Account is gemaakt op:",
-            value=leaver.created_at,
+            value=leaver.created_at.strftime('%d/%m/%Y %H:%M:%S'),
             inline=False
         )
         embed.add_field(
             name="Join datum::",
-            value=leaver.joined_at,
+            value=leaver.joined_at.strftime('%d/%m/%Y %H:%M:%S'),
             inline=False
         )
         embed.add_field(
