@@ -2,7 +2,9 @@ import discord
 import os
 from datetime import datetime
 from discord.ext import commands
+from discord_slash import SlashCommand
 from dotenv import load_dotenv
+
 
 # mark bot as running for panel
 print('started')
@@ -17,6 +19,7 @@ bot = commands.AutoShardedBot(
     help_command=None,
     intents=intents
 )
+slash = SlashCommand(bot, sync_commands=True)
 
 
 # # functions
@@ -68,6 +71,9 @@ async def on_member_remove(member):
 # on_command_error event
 @bot.event
 async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingAnyRole):
+        return await ctx.send(f'Hey {ctx.author.mention} je hebt niet genoeg rechten hiervoor!')
+
     if isinstance(error, commands.MissingPermissions):
         return await ctx.send(f'Hey {ctx.author.mention} je hebt niet genoeg rechten hiervoor!')
 
