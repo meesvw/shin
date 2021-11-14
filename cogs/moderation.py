@@ -178,8 +178,6 @@ class Moderation(commands.Cog):
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
     async def _welkom(self, ctx: SlashContext, user: discord.Member):
-        await ctx.message.delete()
-
         add_role = ctx.guild.get_role(668825700798693377)
         remove_role = ctx.guild.get_role(685607372428804104)
 
@@ -245,8 +243,6 @@ class Moderation(commands.Cog):
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
     async def _weiger(self, ctx: SlashContext, user: discord.Member):
-        await ctx.message.delete()
-
         role = ctx.guild.get_role(668825700798693377)
 
         if ctx.author == user:
