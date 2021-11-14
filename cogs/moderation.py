@@ -170,14 +170,14 @@ class Moderation(commands.Cog):
 
     # welcome command slash
     @cog_ext.cog_slash(
-        name='lobby',
+        name='welkom',
         guild_ids=[647884034676097056],
-        description='Maakt de lobby leeg'
+        description='Geeft een gebruiker in de lobby toegang'
     )
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def welkom(self, ctx: SlashContext, user: discord.Member):
+    async def _welkom(self, ctx: SlashContext, user: discord.Member):
         await ctx.message.delete()
 
         add_role = ctx.guild.get_role(668825700798693377)
@@ -237,14 +237,14 @@ class Moderation(commands.Cog):
 
     # weiger command slash
     @cog_ext.cog_slash(
-        name='lobby',
+        name='weiger',
         guild_ids=[647884034676097056],
-        description='Maakt de lobby leeg'
+        description='Weiger een user in de lobby'
     )
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def weiger(self, ctx: SlashContext, user: discord.Member):
+    async def _weiger(self, ctx: SlashContext, user: discord.Member):
         await ctx.message.delete()
 
         role = ctx.guild.get_role(668825700798693377)
