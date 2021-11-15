@@ -88,6 +88,8 @@ class Moderation(commands.Cog):
         if ctx.channel.id != 696859692684541983:
             return await ctx.send(f'Hey {ctx.author.mention} dit is niet de lobby!')
 
+        await ctx.defer()
+
         embeds = self.bot.get_cog('Embeds')
 
         await ctx.channel.purge(limit=100)
@@ -178,6 +180,7 @@ class Moderation(commands.Cog):
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
     async def _welkom(self, ctx: SlashContext, user: discord.Member):
+        await ctx.defer()
         add_role = ctx.guild.get_role(668825700798693377)
         remove_role = ctx.guild.get_role(685607372428804104)
 
@@ -247,6 +250,8 @@ class Moderation(commands.Cog):
 
         if ctx.author == user:
             return await ctx.send(f'Hey {ctx.author.mention} je kan jezelf niet weigeren')
+
+        await ctx.defer()
 
         if role not in user.roles and not user.bot:
             await user.send(f'**Je bent uit Cosplayers From NL gezet {user.mention}.**\n'
