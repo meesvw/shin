@@ -443,6 +443,7 @@ class Embeds(commands.Cog):
         )
         return embed
 
+    # Embed voor het suggestie command.
     async def suggestie(self, author, text):
         embed = discord.Embed(
             color=discord.Colour.blue()
