@@ -361,7 +361,7 @@ class Moderation(commands.Cog):
             return await ctx.send(f'Hey {ctx.author.mention} deze persoon is al jarig!')
 
         await user.add_roles(ctx.guild.get_role(670769561926369280))
-        await ctx.send(f'{ctx.auhtor.mention} {user.name} is jarig!')
+        await ctx.send(f'{ctx.author.mention} {user.name} is jarig!')
 
     # verwijder verjaardag role command
     @commands.command()
@@ -374,7 +374,29 @@ class Moderation(commands.Cog):
             return await ctx.send(f'Hey {ctx.author.mention} deze persoon is niet jarig!')
 
         await user.remove_roles(ctx.guild.get_role(670769561926369280))
-        await ctx.send(f'{ctx.auhtor.mention} {user.name} is niet meer jarig!')
+        await ctx.send(f'{ctx.author.mention} {user.name} is niet meer jarig!')
+
+    # Suggestie command.
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_any_role(
+        668825700798693377
+    )
+    async def suggestie(self, ctx, user: discord.User, text=None):
+        await ctx.message.delete()
+
+        if text is None:
+            return await ctx.send(f'{ctx.author.mention} suggestie mag niet leeg zijn.')
+
+        embeds = self.bot.get_cog('Embeds')
+        suggestion_channel = self.bot.get_channel(722512072428224572)
+
+        message = await suggestion_channel.send(embed=await embeds.suggestie(ctx.author, text))
+
+        await message.add_reaction('👍')
+        await message.add_reaction('👎')
+        await message.add_reaction('❗')
+
 
 
 def setup(bot):
