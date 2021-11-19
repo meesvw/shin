@@ -19,7 +19,7 @@ class Channels(commands.Cog):
         vc_channel = self.bot.get_channel(751938744675991615)
         channel = self.bot.get_channel(694616201577496626)
         vc_perms = vc_channel.overwrites_for(ctx.author)
-        vc_perms.update(connect=True)
+        vc_perms.update(view_channel=True, connect=True)
         permissions = channel.overwrites_for(ctx.author)
         permissions.update(read_messages=True, send_messages=True)
         await channel.set_permissions(ctx.author, overwrite=permissions, reason='NSFW toegang gekregen')
