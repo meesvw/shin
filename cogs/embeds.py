@@ -443,6 +443,21 @@ class Embeds(commands.Cog):
         )
         return embed
 
+    async def suggestie(self, author, text):
+        embed = discord.Embed(
+            color=discord.Colour.blue()
+        )
+        embed.set_author(
+            name=author.name,
+            icon_url=author.avatar_url
+        )
+        embed.add_field(
+            name="Suggestie:",
+            value=text + "\n 👍 eens! ┃ 👎 oneens | ❗ Meld misbruik",
+            inline=False
+        )
+        return embed
+
 
 def setup(bot):
     bot.add_cog(Embeds(bot))
