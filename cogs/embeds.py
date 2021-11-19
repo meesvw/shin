@@ -466,7 +466,7 @@ class Embeds(commands.Cog):
             color=discord.Colour.red()
         )
         embed.set_author(
-            name=f'{user.name} Heeft een bericht gerapporteerd',
+            name=f'{user.name} heeft een bericht gerapporteerd.',
             icon_url=user.avatar_url
         )
         embed.add_field(
