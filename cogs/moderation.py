@@ -511,6 +511,8 @@ class Moderation(commands.Cog):
         embeds = self.bot.get_cog('Embeds')
         suggestion_channel = self.bot.get_channel(722512072428224572)
 
+        await ctx.send(f'{ctx.author.mention} je hebt een suggestie in {suggestion_channel.mention} gedaan!')
+
         message = await suggestion_channel.send(embed=await embeds.suggestie(ctx.author, text))
 
         for emoji in ('👍', '👎', '❗'):
