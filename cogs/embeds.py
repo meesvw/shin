@@ -473,6 +473,7 @@ class Embeds(commands.Cog):
             name='Bericht',
             value=message.jump_url
         )
+        return embed
 
 
 def setup(bot):
