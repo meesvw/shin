@@ -2,7 +2,12 @@ import discord
 import os
 from datetime import datetime
 from discord.ext import commands
+from discord_slash import SlashCommand
 from dotenv import load_dotenv
+
+
+# mark bot as running for panel
+print('started')
 
 bot_location = f'{os.path.dirname(os.path.abspath(__file__))}/'
 load_dotenv()
@@ -14,6 +19,7 @@ bot = commands.AutoShardedBot(
     help_command=None,
     intents=intents
 )
+slash = SlashCommand(bot, sync_commands=True)
 
 
 # # functions
@@ -40,7 +46,7 @@ async def on_ready():
 
 # on_member_join event
 @bot.event
-async def on_member_join(member: discord.Member):
+async def on_member_join(member):
     embeds = bot.get_cog('Embeds')
     await member.add_roles(
         member.guild.get_role(669889906071437332),
@@ -49,8 +55,10 @@ async def on_member_join(member: discord.Member):
         reason='Joined server'
     )
     await bot.get_channel(722771390092279819).send(embed=await embeds.join_log(member))
-    await bot.get_channel(696859692684541983).send("Welkom " + member.mention + "! Lees alvast de <#669161755972206629> en selecteer je <#701131739715600436>, een <@&669371769672564776> komt je zo snel mogelijk helpen! <:KellyHappyMood:720436790913269802>")
-    #await member.send(embed=await embeds.join_dm(member)) <- deze hoort pas na verwelkoming gecalled te worden?
+    await bot.get_channel(696859692684541983).send(
+        f'Welkom {member.mention}! Lees alvast de <#669161755972206629> en selecteer je <#701131739715600436>, '
+        f'een <@&669371769672564776> komt je zo snel mogelijk helpen! <:KellyHappyMood:720436790913269802>'
+    )
 
 
 # on_member_remove event
@@ -63,6 +71,9 @@ async def on_member_remove(member):
 # on_command_error event
 @bot.event
 async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingAnyRole):
+        return await ctx.send(f'Hey {ctx.author.mention} je hebt niet genoeg rechten hiervoor!')
+
     if isinstance(error, commands.MissingPermissions):
         return await ctx.send(f'Hey {ctx.author.mention} je hebt niet genoeg rechten hiervoor!')
 
@@ -96,6 +107,7 @@ for file in os.listdir(f'{bot_location}cogs'):
             print(f'{current_time()} - Error loading: {file[:-3]} || {e}')
 
 # print logo
+print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
 print(
     """
  _____ _     _       

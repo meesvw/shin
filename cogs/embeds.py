@@ -88,12 +88,12 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name="Gebruiker-ID: ",
-            value=joiner.id,
+            value=f'`{joiner.id}`',
             inline=False
         )
         embed.add_field(
             name="Account is gemaakt op:",
-            value=joiner.created_at,
+            value=joiner.created_at.strftime('%d/%m/%Y %H:%M:%S'),
             inline=False
         )
         embed.add_field(
@@ -106,8 +106,8 @@ class Embeds(commands.Cog):
         )
         return embed
 
-    # returns join dm
-    async def join_dm(self, joiner, toelater, channel):
+    # returns welcome dm
+    async def welcome_dm(self, joiner, toelater, channel):
         embed = discord.Embed(
             title=f'Hey {joiner.name}',
             description=f'Welkom in Cosplayers from NL! Vergeet niet jezelf voor te stellen in {channel.mention}'
@@ -136,17 +136,17 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name="Gebruiker-ID: ",
-            value=leaver.id,
+            value=f'`{leaver.id}`',
             inline=False
         )
         embed.add_field(
             name="Account is gemaakt op:",
-            value=leaver.created_at,
+            value=leaver.created_at.strftime('%d/%m/%Y %H:%M:%S'),
             inline=False
         )
         embed.add_field(
             name="Join datum::",
-            value=leaver.joined_at,
+            value=leaver.joined_at.strftime('%d/%m/%Y %H:%M:%S'),
             inline=False
         )
         embed.add_field(
