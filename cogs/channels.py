@@ -12,6 +12,9 @@ class Channels(commands.Cog):
 
     # Voegt mensen toe aan de NSFW channel
     @commands.command()
+    @commands.has_any_role(
+        732611707729346610, 732611767481663558
+    )
     async def nsfw(self, ctx):
         channel = self.bot.get_channel(694616201577496626)
         permissions = channel.overwrites_for(ctx.author)
