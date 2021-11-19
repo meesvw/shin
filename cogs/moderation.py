@@ -19,6 +19,10 @@ Hoofd Yuuto = 697198873495470090
 Yuuto       = 669371769672564776
 Trial-Yuuto = 705844874590552365
 Dev Team    = 750673616584048741
+
+Welkom role:
+IDs:
+Kazoku      = 668825700798693377
 """
 
 
@@ -497,9 +501,7 @@ class Moderation(commands.Cog):
     # Suggestie command.
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        668825700798693377
-    )
+    @commands.has_any_role(668825700798693377)
     async def suggestie(self, ctx, *, text=None):
         await ctx.message.delete()
 
@@ -511,10 +513,19 @@ class Moderation(commands.Cog):
 
         message = await suggestion_channel.send(embed=await embeds.suggestie(ctx.author, text))
 
-        await message.add_reaction('👍')
-        await message.add_reaction('👎')
-        await message.add_reaction('❗')
+        for emoji in ('👍', '👎', '❗'):
+            await message.add_reaction(emoji)
 
+        def check(reaction, user):
+            return ctx.message.id == message.id and str(reaction.emoji) == '❗'
+
+        while True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=86400, check=check)
+                log_channel = self.bot.get_channel(734365925620580402)
+                await log_channel.send(f'{user.mention} heeft {message.jump_url} gerapporteerd!')
+            except asyncio.TimeoutError:
+                break
 
 
 def setup(bot):
