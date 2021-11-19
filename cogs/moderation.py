@@ -517,12 +517,17 @@ class Moderation(commands.Cog):
             await message.add_reaction(emoji)
 
         def check(reaction, user):
-            return ctx.message.id == message.id and str(reaction.emoji) == '❗'
+            return str(reaction.emoji) == '❗'
 
         while True:
             try:
                 reaction, user = await self.bot.wait_for('reaction_add', timeout=86400, check=check)
                 log_channel = self.bot.get_channel(734365925620580402)
+
+                print('Ik ken deze informatie')
+                print(user)
+                print(reaction)
+
                 await log_channel.send(f'{user.mention} heeft {message.jump_url} gerapporteerd!')
             except asyncio.TimeoutError:
                 break
