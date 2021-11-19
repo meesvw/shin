@@ -523,12 +523,7 @@ class Moderation(commands.Cog):
             try:
                 reaction, user = await self.bot.wait_for('reaction_add', timeout=86400, check=check)
                 log_channel = self.bot.get_channel(734365925620580402)
-
-                print('Ik ken deze informatie')
-                print(user)
-                print(reaction)
-
-                await log_channel.send(f'{user.mention} heeft {message.jump_url} gerapporteerd!')
+                await log_channel.send(embed=await embeds.suggestie_report(user, message))
             except asyncio.TimeoutError:
                 break
 

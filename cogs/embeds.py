@@ -443,6 +443,7 @@ class Embeds(commands.Cog):
         )
         return embed
 
+    # # suggestie
     # Embed voor het suggestie command.
     async def suggestie(self, author, text):
         embed = discord.Embed(
@@ -458,6 +459,20 @@ class Embeds(commands.Cog):
             inline=False
         )
         return embed
+
+    # Embed voor gerapporteerde suggestie
+    async def suggestie_report(self, user, message):
+        embed = discord.Embed(
+            color=discord.Colour.red()
+        )
+        embed.set_author(
+            name=f'{user.name} Heeft een bericht gerapporteerd',
+            icon_url=user.avatar_url
+        )
+        embed.add_field(
+            name='Bericht',
+            value=message.jump_url
+        )
 
 
 def setup(bot):
