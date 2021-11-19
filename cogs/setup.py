@@ -13,7 +13,9 @@ class Setup(commands.Cog):
         return await ctx.author.send(embed=await embeds.help())
 
     @commands.command()
-    @commands.has_any_role('Proxy', 'Hoofd Yuuto', 'Yuuto', 'Trial-Yuuto', 'Dev Team')
+    @commands.has_any_role(
+        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
+    )
     async def status(self, ctx, *, status):
         embeds = self.bot.get_cog('Embeds')
         await self.bot.change_presence(
