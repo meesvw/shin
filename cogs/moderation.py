@@ -500,10 +500,10 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         668825700798693377
     )
-    async def suggestie(self, ctx, text=None):
+    async def suggestie(self, ctx, *text):
         await ctx.message.delete()
 
-        if text is None:
+        if not text:
             return await ctx.send(f'{ctx.author.mention} suggestie mag niet leeg zijn.')
 
         embeds = self.bot.get_cog('Embeds')
