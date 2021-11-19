@@ -174,7 +174,7 @@ class Embeds(commands.Cog):
     # returns user toegelaten embed
     async def toegang_gegeven(self, toelater, toegelaten):
         embed = discord.Embed(
-            color=discord.Colour.blue(),
+            color=discord.Colour.green(),
         )
         embed.set_author(
             name=f'{toelater.name} heeft toegang gegeven aan {toegelaten.name}',
@@ -185,7 +185,7 @@ class Embeds(commands.Cog):
     # returns users geweigerd embed
     async def toegang_geweigerd(self, weigeraar, geweigerde):
         embed = discord.Embed(
-            color=discord.Colour.blue()
+            color=discord.Colour.red()
         )
         embed.set_author(
             name=f'{weigeraar.name} heeft {geweigerde.name} geweigerd',
