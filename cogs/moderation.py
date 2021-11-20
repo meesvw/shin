@@ -389,7 +389,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def mute(self, ctx, users: commands.Greedy[discord.User]):
+    async def mute(self, ctx, users: commands.Greedy[discord.Member]):
         embeds = self.bot.get_cog('Embeds')
         add_role = ctx.guild.get_role(671073771246845960)
         for user in users:
