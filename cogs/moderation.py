@@ -448,7 +448,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 750673616584048741
     )
-    async def ban(self, ctx, users: commands.Greedy[discord.User], *, reason=None):
+    async def ban(self, ctx, users: commands.Greedy[discord.Member], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
         log_channel = self.bot.get_channel(744259944760737795)
         community_channel = self.bot.get_channel(717814933705982083)
