@@ -392,7 +392,17 @@ class Moderation(commands.Cog):
     async def mute(self, ctx, users: commands.Greedy[discord.Member]):
         embeds = self.bot.get_cog('Embeds')
         add_role = ctx.guild.get_role(671073771246845960)
+
+        if users is None:
+            return await ctx.send(embeds=await embeds.explain('!mute @gebruiker(s) redenen'))
+
         for user in users:
+            if user.bot:
+                return await ctx.send(f'{ctx.author.mention} je kan geen bots kicken')
+
+            if user == ctx.author:
+                return await ctx.send(f'{ctx.author.mention} je kan jezelf niet mute!')
+
             await user.add_roles(add_role, reason=f'Muted door {ctx.author.name}')
             await ctx.send(embed=await embeds.user_muted_short(user))
             await self.bot.get_channel(734365925620580402).send(embed=await embeds.user_muted(user, ctx.author))
@@ -404,8 +414,6 @@ class Moderation(commands.Cog):
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
     async def unmute(self, ctx, user: discord.Member):
-        await ctx.message.delete()
-
         embeds = self.bot.get_cog('Embeds')
         remove_role = ctx.guild.get_role(671073771246845960)
         if remove_role in user.roles:

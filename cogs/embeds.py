@@ -145,7 +145,7 @@ class Embeds(commands.Cog):
             inline=False
         )
         embed.add_field(
-            name="Join datum::",
+            name="Join datum:",
             value=leaver.joined_at.strftime('%d/%m/%Y %H:%M:%S'),
             inline=False
         )
