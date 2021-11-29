@@ -84,7 +84,7 @@ async def on_command_error(ctx, error):
         return await ctx.send(f'Hey {ctx.author.mention} ik kan die gebruiker niet vinden...')
 
     if isinstance(error, commands.MissingRequiredArgument):
-        return await ctx.send(f'`{error}`')
+        return await ctx.send(f'`{str(error).split(" ")[0]} moet worden ingevuld!`')
 
 # check .env
 check = False
