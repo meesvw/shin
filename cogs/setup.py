@@ -12,10 +12,10 @@ class Setup(commands.Cog):
     async def help(self, ctx):
         embeds = self.bot.get_cog('Embeds')
         await ctx.send(f':mailbox_with_mail: {ctx.author.mention} ik heb je een DM gestuurd!')
-        if any(x in ctx.author.roles for x in admin_roles):
-            await ctx.author.send(embed=await embeds.admin_help())
-        else:
-            await ctx.author.send(embed=await embeds.user_help())
+        for role in ctx.author.roles:
+            if role.id in admin_roles:
+                return await ctx.author.send(embed=await embeds.admin_help())
+        return await ctx.author.send(embed=await embeds.user_help())
 
     @commands.command()
     @commands.has_any_role(
