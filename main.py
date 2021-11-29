@@ -86,7 +86,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         return await ctx.send(
             f'{str(error).split(" ")[0]} moet worden ingevuld! '
-            f'Voorbeeld: !{ctx.command.name} {str(error).split(" ")[0]}'
+            f'Voorbeeld: !{ctx.command.name} `{str(error).split(" ")[0]}`'
         )
 
 # check .env
