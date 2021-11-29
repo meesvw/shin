@@ -25,6 +25,8 @@ IDs:
 Kazoku      = 668825700798693377
 """
 
+perms_list = [669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741]
+
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
@@ -34,9 +36,7 @@ class Moderation(commands.Cog):
     # clear messages command prefix
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(perms_list)
     async def clear(self, ctx, amount: int):
         if amount < 1:
             return await ctx.send(f'Hey {ctx.author.mention} ik heb een positief getal nodig!')
