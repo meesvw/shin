@@ -390,8 +390,8 @@ class Embeds(commands.Cog):
         return embed
 
     # # uitleg commands
-    # algemene help command
-    async def help(self):
+    # moderator help command
+    async def admin_help(self):
         embed = discord.Embed(
             color=discord.Colour.blue()
         )
@@ -407,7 +407,7 @@ class Embeds(commands.Cog):
             inline=False
         )
         embed.add_field(
-            name='Moderatie (Alleen voor moderators)',
+            name='Moderatie',
             value='- !ban @gebruiker(s) redenen\n'
                   '- !kick @gebruiker(s) redenen\n'
                   '- !warn @gebruiker(s) redenen\n'
@@ -422,8 +422,32 @@ class Embeds(commands.Cog):
             inline=False
         )
         embed.add_field(
-            name='Bot aanpassen (Alleen voor moderators)',
+            name='Role commands',
+            value='- !verjaardag @gebruiker\n'
+                  '- !verwijderverjaardag @gebruiker\n',
+            inline=False
+        )
+        embed.add_field(
+            name='Bot aanpassen',
             value='- !status [een status]',
+            inline=False
+        )
+        return embed
+
+    # user help command
+    async def user_help(self):
+        embed = discord.Embed(
+            color=discord.Colour.blue()
+        )
+        embed.set_author(
+            name='Hier zijn alle commands!',
+            icon_url=self.bot.user.avatar_url
+        )
+        embed.add_field(
+            name='Fun',
+            value='- !hug @gebruiker\n'
+                  '- !pat @gebruiker\n'
+                  '- !wink @gebruiker\n',
             inline=False
         )
         return embed

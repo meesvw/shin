@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+admin_roles = (669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741)
+
 
 class Setup(commands.Cog):
     def __init__(self, bot):
@@ -10,7 +12,10 @@ class Setup(commands.Cog):
     async def help(self, ctx):
         embeds = self.bot.get_cog('Embeds')
         await ctx.send(f':mailbox_with_mail: {ctx.author.mention} ik heb je een DM gestuurd!')
-        return await ctx.author.send(embed=await embeds.help())
+        if any(x in ctx.author.roles for x in admin_roles):
+            await ctx.author.send(embed=await embeds.admin_help())
+        else:
+            await ctx.author.send(embed=await embeds.user_help())
 
     @commands.command()
     @commands.has_any_role(

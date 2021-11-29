@@ -499,7 +499,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def removeverjaardag(self, ctx, user: discord.Member):
+    async def verwijderverjaardag(self, ctx, user: discord.Member):
         if ctx.guild.get_role(670769561926369280) not in user.roles:
             return await ctx.send(f'Hey {ctx.author.mention} deze persoon is niet jarig!')
 
