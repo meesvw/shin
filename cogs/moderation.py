@@ -432,8 +432,8 @@ class Moderation(commands.Cog):
     )
     async def kick(self, ctx, users: commands.Greedy[discord.Member], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
-        if users is None:
-            return await ctx.send(embeds=await embeds.explain('!kick @gebruiker(s) redenen'))
+        if not users:
+            return await ctx.send(embed=await embeds.explain('!kick @gebruiker(s) redenen'))
 
         for user in users:
             if user.bot:
@@ -461,8 +461,8 @@ class Moderation(commands.Cog):
         log_channel = self.bot.get_channel(744259944760737795)
         community_channel = self.bot.get_channel(717814933705982083)
 
-        if users is None:
-            return await ctx.send(embeds=await embeds.explain('!ban @gebruiker(s) redenen'))
+        if not users:
+            return await ctx.send(embed=await embeds.explain('!ban @gebruiker(s) redenen'))
 
         for user in users:
             if user.bot:
