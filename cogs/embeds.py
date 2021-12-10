@@ -479,7 +479,7 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name="Suggestie:",
-            value=text + "\n 👍 eens! ┃ 👎 oneens | ❗ Meld misbruik",
+            value=text + "\n 👍 eens! ┃ 👎 oneens ┃ ❗ Meld misbruik",
             inline=False
         )
         return embed
