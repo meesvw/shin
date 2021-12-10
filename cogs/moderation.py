@@ -527,7 +527,7 @@ class Moderation(commands.Cog):
             await message.add_reaction(emoji)
 
         def check(reaction, user):
-            return str(reaction.emoji) == '❗'
+            return str(reaction.emoji) == '❗' and not user.bot
 
         while True:
             try:
