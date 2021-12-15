@@ -1,4 +1,5 @@
 import asyncio
+import database
 import discord
 from datetime import datetime
 from discord.ext import commands
@@ -276,18 +277,18 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def warn(self, ctx, users: commands.Greedy[discord.User], *, warning=None):
+    async def warn(self, ctx, users: commands.Greedy[discord.User], *, warning='Geen redenen gegeven'):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
-        db = self.bot.get_cog("Database")
         for user in users:
-            output = await db.warn(user, warning, ctx.author)
-            if output == "error":
+            cosplayer = database.Cosplayer(user.id)
+            if await cosplayer.add_warning(f'{ctx.author.name}#{ctx.author.discriminator}', warning):
+                channel = self.bot.get_channel(719263750426984538)
+                await ctx.send(embed=await embeds.warning_short(user, ctx.author))
+                await channel.send(embed=await embeds.warning(user, warning, ctx.author))
+            else:
                 await ctx.send(embed=await embeds.error())
                 break
-            channel = self.bot.get_channel(719263750426984538)
-            await ctx.send(embed=await embeds.warning_short(user, ctx.author))
-            await channel.send(embed=await embeds.warning(user, warning, ctx.author))
 
     # show warnings command
     @commands.command()
@@ -295,16 +296,14 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def warnings(self, ctx, warnings_user: discord.User=None):
+    async def warnings(self, ctx, user: discord.User = None):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
-        db = self.bot.get_cog("Database")
-        if warnings_user:
-            user_warnings = await db.warnings(warnings_user)
+        if user:
+            cosplayer = database.Cosplayer(user.id)
+            user_warnings = await cosplayer.get_warnings()
         else:
-            return await ctx.send(embed=await embeds.explain(
-                "warnings",
-                f"`warnings @hope`"))
+            return await ctx.send(embed=await embeds.explain('warnings', '`warnings @hope`'))
         try:
             if user_warnings["warnings"]:
                 message = await ctx.send(embed=await embeds.loading())
@@ -317,16 +316,18 @@ class Moderation(commands.Cog):
                 menu_number = 0
                 for emoji in emoji_list:
                     await message.add_reaction(emoji=emoji)
+
                 def check(reaction, user):
                     return user == ctx.author and str(reaction.emoji) in emoji_list and reaction.message.id == \
                            message.id
+
                 def create_embed(number):
                     embed = discord.Embed(
                         colour=discord.Colour.blue()
                     )
                     embed.set_author(
-                        name=f"{warnings_user.name}'s waarschuwing {number}",
-                        icon_url=warnings_user.avatar_url
+                        name=f"{user.name}'s waarschuwing {number}",
+                        icon_url=user.avatar_url
                     )
                     embed.add_field(
                         name="Redenen",
@@ -354,25 +355,31 @@ class Moderation(commands.Cog):
                         await message.delete()
                         break
             else:
-                return await ctx.send(embed=await embeds.nowarning(warnings_user))
+                return await ctx.send(embed=await embeds.nowarning(user))
         except TypeError:
-            return await ctx.send(embed=await embeds.nowarning(warnings_user))
+            return await ctx.send(embed=await embeds.nowarning(user))
 
     # pardon command
-    @commands.command()
+    @commands.command(aliases=['vergeef'])
     @commands.guild_only()
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def pardon(self, ctx, user: discord.User, warning=None):
+    async def pardon(self, ctx, user: discord.User, warning_number=None):
         await ctx.message.delete()
-        embeds = self.bot.get_cog("Embeds")
-        db = self.bot.get_cog("Database")
-        output = await db.pardon(ctx.author, warning)
-        if warning is None:
-            return await ctx.send(embed=await embeds.explain(
-                "pardon",
-                "|`!pardon @hope 1`| De 1 is de waarschuwing die je kan vinden door `!warnings @hope` te doen"))
+        embeds = self.bot.get_cog('Embeds')
+
+        # check if warning_number is given
+        if warning_number is None:
+            return await ctx.send(
+                embed=await embeds.explain(
+                    "pardon",
+                    "|`!pardon @hope 1`| De 1 is de waarschuwing die je kan vinden door `!warnings @hope` te doen"
+                )
+            )
+
+        output = await database.Cosplayer(user.id).remove_warning(warning_number)
+
         if output:
             channel = self.bot.get_channel(719263750426984538)
             await channel.send(embed=await embeds.pardon(user, ctx.author))

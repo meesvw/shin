@@ -53,21 +53,6 @@ class Devs(commands.Cog):
         except Exception as e:
             await ctx.send(f'`error: {e}`')
 
-    # # Database commands
-    # poke database
-    @commands.command()
-    @commands.check(is_mees)
-    async def poke(self, ctx):
-        db = self.bot.get_cog('Database')
-        return await ctx.send(await db.poke())
-
-    # drops all logs
-    @commands.command()
-    @commands.check(is_mees)
-    async def drop(self, ctx):
-        db = self.bot.get_cog('Database')
-        return await ctx.send(await db.drop())
-
 
 def setup(bot):
     bot.add_cog(Devs(bot))
