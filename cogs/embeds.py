@@ -287,7 +287,8 @@ class Embeds(commands.Cog):
             color=discord.Colour.blue()
         )
         embed.set_author(
-            name=f'{vergever.name} heeft {user.name} vergeven'
+            name=f'{vergever.name}#{vergever.discriminator} heeft {user.name}#{user.discriminator} vergeven',
+            icon_url=vergever.avatar_url
         )
         return embed
 
@@ -337,7 +338,7 @@ class Embeds(commands.Cog):
             inline=False
         )
         embed.set_footer(
-            text=f'Kicked door {kicker.name}{kicker.discriminator}',
+            text=f'Kicked door {kicker.name}#{kicker.discriminator}',
             icon_url=kicker.avatar_url
         )
         return embed
