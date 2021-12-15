@@ -309,7 +309,7 @@ class Moderation(commands.Cog):
                 message = await ctx.send(embed=await embeds.loading())
 
                 dict_list = []
-                for warning in user_warnings["warnings"]:
+                for warning in sorted(user_warnings["warnings"]):
                     dict_list.append(warning)
 
                 emoji_list = ["◀", "▶"]
