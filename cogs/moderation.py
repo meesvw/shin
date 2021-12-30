@@ -298,65 +298,68 @@ class Moderation(commands.Cog):
     )
     async def warnings(self, ctx, user: discord.User = None):
         await ctx.message.delete()
-        embeds = self.bot.get_cog("Embeds")
-        if user:
-            cosplayer = database.Cosplayer(user.id)
-            user_warnings = await cosplayer.get_warnings()
-        else:
+        embeds = self.bot.get_cog('Embeds')
+
+        if not user:
             return await ctx.send(embed=await embeds.explain('warnings', '`warnings @hope`'))
-        try:
-            if user_warnings["warnings"]:
-                message = await ctx.send(embed=await embeds.loading())
 
-                dict_list = []
-                for warning in sorted(user_warnings["warnings"]):
-                    dict_list.append(warning)
+        cosplayer = database.Cosplayer(user.id)
+        user_warnings = await cosplayer.get_warnings()
 
-                emoji_list = ["◀", "▶"]
-                menu_number = 0
-                for emoji in emoji_list:
-                    await message.add_reaction(emoji=emoji)
+        if user_warnings:
+            message = await ctx.send(embed=await embeds.loading())
 
-                def check(reaction, user):
-                    return user == ctx.author and str(reaction.emoji) in emoji_list and reaction.message.id == \
-                           message.id
+            emoji_list = ('◀', '❌', '▶')
+            menu_number = 0
 
-                def create_embed(number):
-                    embed = discord.Embed(
-                        colour=discord.Colour.blue()
-                    )
-                    embed.set_author(
-                        name=f"{user.name}'s waarschuwing {number}",
-                        icon_url=user.avatar_url
-                    )
-                    embed.add_field(
-                        name="Redenen",
-                        value=user_warnings["warnings"][number]["warning"]
-                    )
-                    embed.set_footer(
-                        text=f'Door: {user_warnings["warnings"][number]["warner"]} '
-                             f'- {user_warnings["warnings"][number]["time"]}'
-                    )
-                    return embed
+            for emoji in emoji_list:
+                await message.add_reaction(emoji=emoji)
 
-                await message.edit(embed=create_embed(dict_list[menu_number]))
+            def check(reaction, user):
+                return user == ctx.author and str(reaction.emoji) in emoji_list and reaction.message.id == \
+                       message.id
 
-                while True:
-                    try:
-                        reaction, user = await self.bot.wait_for("reaction_add", timeout=20, check=check)
-                        await message.remove_reaction(str(reaction.emoji), ctx.author)
+            await message.edit(embed=await embeds.warnings(
+                user,
+                user_warnings[menu_number]['warning'],
+                user_warnings[menu_number]['warner'],
+                user_warnings[menu_number]['time'],
+                user_warnings[menu_number]['_id']
+            ))
 
-                        if str(reaction.emoji) == "◀" and menu_number > 0:
-                            menu_number -= 1
-                        if str(reaction.emoji) == "▶" and menu_number != len(dict_list)-1:
-                            menu_number += 1
-                        await message.edit(embed=create_embed(dict_list[menu_number]))
-                    except asyncio.TimeoutError:
-                        await message.delete()
-                        break
-            else:
-                return await ctx.send(embed=await embeds.nowarning(user))
-        except TypeError:
+            while True:
+                try:
+                    reaction, user = await self.bot.wait_for('reaction_add', timeout=20, check=check)
+                    await message.remove_reaction(str(reaction.emoji), ctx.author)
+
+                    change = False
+
+                    if str(reaction.emoji) == '◀' and menu_number > 0:
+                        menu_number -= 1
+                        change = True
+                    if str(reaction.emoji) == '▶' and menu_number != len(user_warnings)-1:
+                        menu_number += 1
+                        change = True
+                    if str(reaction.emoji) == '❌':
+                        await cosplayer.remove_warning(user_warnings[menu_number]['_id'])
+                        menu_number = 0
+                        change = True
+
+                    # prevent rate limit
+                    if change:
+                        await message.edit(embed=embeds.warnings(
+                            user,
+                            user_warnings[menu_number]['warning'],
+                            user_warnings[menu_number]['warner'],
+                            user_warnings[menu_number]['time'],
+                            user_warnings[menu_number]['_id']
+                        ))
+                except asyncio.TimeoutError:
+                    break
+
+            await message.delete()
+
+        else:
             return await ctx.send(embed=await embeds.nowarning(user))
 
     # pardon command
@@ -373,8 +376,8 @@ class Moderation(commands.Cog):
         if warning_number is None:
             return await ctx.send(
                 embed=await embeds.explain(
-                    "pardon",
-                    "|`!pardon @hope 1`| De 1 is de waarschuwing die je kan vinden door `!warnings @hope` te doen"
+                    'pardon',
+                    '|`!pardon @hope ID`| De warning ID kan je vinden door `!warnings @hope` te doen'
                 )
             )
 
