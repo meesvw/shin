@@ -60,14 +60,3 @@ class Cosplayer:
         except Exception as e:
             print(f'{current_time()} - Error: {e}')
             return 'error'
-
-
-import asyncio
-cosplayer = Cosplayer(298890523454734336)
-# print(asyncio.run(cosplayer.add_warning('database', 'test')))
-
-print(asyncio.run(cosplayer.reset_warnings()))
-print(asyncio.run(cosplayer.get_warnings()))
-
-# for warning in asyncio.run(cosplayer.get_warnings()):
-#     print(warning)
