@@ -258,7 +258,7 @@ class Embeds(commands.Cog):
         )
         embed.set_footer(
             text=f'{menu_number+1}/{len(user_warnings)} '
-                 f'Door: {user_warnings[menu_number]["warner"]} - {user_warnings[menu_number["time"]]}'
+                 f'Door: {user_warnings[menu_number]["warner"]} - {user_warnings[menu_number]["time"]}'
         )
         return embed
 
