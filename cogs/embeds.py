@@ -82,11 +82,6 @@ class Embeds(commands.Cog):
             icon_url=joiner.avatar_url
         )
         embed.add_field(
-            name="Gebruiker: " + joiner.name + "#" + joiner.discriminator,
-            value=joiner.mention,
-            inline=False
-        )
-        embed.add_field(
             name="Gebruiker-ID: ",
             value=f'`{joiner.id}`',
             inline=False
