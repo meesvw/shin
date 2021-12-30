@@ -366,7 +366,7 @@ class Moderation(commands.Cog):
             return await ctx.send(
                 embed=await embeds.explain(
                     'pardon',
-                    '|`!pardon @hope ID`| De warning ID kan je vinden door `!warnings @hope` te doen'
+                    'Voorbeeld: `!pardon @user ID` De warning ID kan je vinden door `!warnings @user` te doen'
                 )
             )
 

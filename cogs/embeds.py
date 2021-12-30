@@ -254,7 +254,7 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name='ID',
-            value=user_warnings[menu_number]['_id']
+            value=f'`{user_warnings[menu_number]["_id"]}`'
         )
         embed.set_footer(
             text=f'{menu_number+1}/{len(user_warnings)} '
