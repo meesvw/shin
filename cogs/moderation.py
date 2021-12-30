@@ -332,22 +332,16 @@ class Moderation(commands.Cog):
                     reaction, user = await self.bot.wait_for('reaction_add', timeout=20, check=check)
                     await message.remove_reaction(str(reaction.emoji), ctx.author)
 
-                    change = False
-
                     if str(reaction.emoji) == '◀' and menu_number > 0:
                         menu_number -= 1
-                        change = True
                     if str(reaction.emoji) == '▶' and menu_number != len(user_warnings)-1:
                         menu_number += 1
-                        change = True
                     if str(reaction.emoji) == '❌':
                         await cosplayer.remove_warning(user_warnings[menu_number]['_id'])
                         user_warnings = await cosplayer.get_warnings()
                         menu_number = 0
-                        change = True
 
-                    # prevent rate limit
-                    if change and user_warnings:
+                    if user_warnings:
                         await message.edit(embed=await embeds.warnings(
                             user,
                             user_warnings[menu_number]['warning'],
@@ -355,6 +349,10 @@ class Moderation(commands.Cog):
                             user_warnings[menu_number]['time'],
                             user_warnings[menu_number]['_id']
                         ))
+                    else:
+                        await message.edit(embed=await embeds.nowarning(user))
+                        await asyncio.sleep(10)
+                        break
                 except asyncio.TimeoutError:
                     break
 
