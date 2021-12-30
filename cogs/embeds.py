@@ -240,7 +240,7 @@ class Embeds(commands.Cog):
 
     # # warning embeds
     # returns warnings embed
-    async def warnings(self, user, warning, warner, time, _id):
+    async def warnings(self, user, user_warnings, menu_number):
         embed = discord.Embed(
             color=discord.Color.blue()
         )
@@ -249,11 +249,16 @@ class Embeds(commands.Cog):
             icon_url=user.avatar_url
         )
         embed.add_field(
-            name="Redenen",
-            value=warning
+            name='Redenen',
+            value=user_warnings[menu_number]['warning']
+        )
+        embed.add_field(
+            name='ID',
+            value=user_warnings[menu_number]['_id']
         )
         embed.set_footer(
-            text=f'ID: {_id} Door: {warner} - {time}'
+            text=f'{menu_number+1}/{len(user_warnings)} '
+                 f'Door: {user_warnings[menu_number]["warner"]} - {user_warnings[menu_number["time"]]}'
         )
         return embed
 

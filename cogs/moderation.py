@@ -319,13 +319,7 @@ class Moderation(commands.Cog):
                 return user == ctx.author and str(reaction.emoji) in emoji_list and reaction.message.id == \
                        message.id
 
-            await message.edit(embed=await embeds.warnings(
-                user,
-                user_warnings[menu_number]['warning'],
-                user_warnings[menu_number]['warner'],
-                user_warnings[menu_number]['time'],
-                user_warnings[menu_number]['_id']
-            ))
+            await message.edit(embed=await embeds.warnings(user, user_warnings, menu_number))
 
             while True:
                 try:
@@ -342,13 +336,7 @@ class Moderation(commands.Cog):
                         menu_number = 0
 
                     if user_warnings:
-                        await message.edit(embed=await embeds.warnings(
-                            user,
-                            user_warnings[menu_number]['warning'],
-                            user_warnings[menu_number]['warner'],
-                            user_warnings[menu_number]['time'],
-                            user_warnings[menu_number]['_id']
-                        ))
+                        await message.edit(embed=await embeds.warnings(user, user_warnings, menu_number))
                     else:
                         await message.edit(embed=await embeds.nowarning(user))
                         await asyncio.sleep(10)
@@ -359,7 +347,9 @@ class Moderation(commands.Cog):
             await message.delete()
 
         else:
-            return await ctx.send(embed=await embeds.nowarning(user))
+            message = await ctx.send(embed=await embeds.nowarning(user))
+            await asyncio.sleep(10)
+            await message.delete()
 
     # pardon command
     @commands.command(aliases=['vergeef'])
