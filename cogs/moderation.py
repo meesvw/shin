@@ -347,7 +347,7 @@ class Moderation(commands.Cog):
 
                     # prevent rate limit
                     if change:
-                        await message.edit(embed=embeds.warnings(
+                        await message.edit(embed=await embeds.warnings(
                             user,
                             user_warnings[menu_number]['warning'],
                             user_warnings[menu_number]['warner'],
