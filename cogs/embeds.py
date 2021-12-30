@@ -253,7 +253,7 @@ class Embeds(commands.Cog):
             value=warning
         )
         embed.set_footer(
-            text=f'ID: `{_id}` Door: {warner} - {time}'
+            text=f'ID: {_id} Door: {warner} - {time}'
         )
         return embed
 

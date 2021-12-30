@@ -342,7 +342,7 @@ class Moderation(commands.Cog):
                         change = True
                     if str(reaction.emoji) == '❌':
                         await cosplayer.remove_warning(user_warnings[menu_number]['_id'])
-                        user_warnings = cosplayer.get_warnings()
+                        user_warnings = await cosplayer.get_warnings()
                         menu_number = 0
                         change = True
 
