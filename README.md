@@ -1,4 +1,4 @@
-# vera
+# Shin
 > COSFNL Discord bot
 
 ## Dependecies
