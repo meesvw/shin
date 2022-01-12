@@ -392,7 +392,7 @@ class Embeds(commands.Cog):
             inline=False
         )
         embed.set_footer(
-            text=f'Verbannen door {banner.name}{banner.discriminator}',
+            text=f'Verbannen door {banner.name}#{banner.discriminator}',
             icon_url=banner.avatar_url
         )
         return embed
