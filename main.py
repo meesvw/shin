@@ -111,18 +111,5 @@ for file in os.listdir(f'{bot_location}cogs'):
         except Exception as e:
             print(f'{current_time()} - Error loading: {file[:-3]} || {e}')
 
-# print logo
-print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
-print(
-    """
- _____ _     _       
-/  ___| |   (_)      
-\ `--.| |__  _ _ __  
- `--. \ '_ \| | '_ \ 
-/\__/ / | | | | | | |
-\____/|_| |_|_|_| |_|
-    """
-)
-
 # start bot
 bot.run(os.getenv('token'))
