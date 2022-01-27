@@ -54,9 +54,11 @@ async def on_member_join(member):
         member.guild.get_role(685607372428804104),
         reason='Joined server'
     )
+    # 669161755972206629 = regels
+    # 935961075407523900 = roles
     await bot.get_channel(722771390092279819).send(embed=await embeds.join_log(member))
     await bot.get_channel(696859692684541983).send(
-        f'Welkom {member.mention}! Lees alvast de <#669161755972206629> en selecteer je <#701131739715600436>, '
+        f'Welkom {member.mention}! Lees alvast de <#669161755972206629> en selecteer je <#935961075407523900>, '
         f'een <@&669371769672564776> komt je zo snel mogelijk helpen! <:KellyHappyMood:720436790913269802>'
     )
 
