@@ -2,7 +2,6 @@ import discord
 import os
 from datetime import datetime
 from discord.ext import commands
-from discord_slash import SlashCommand
 from dotenv import load_dotenv
 
 
@@ -19,7 +18,6 @@ bot = commands.AutoShardedBot(
     help_command=None,
     intents=intents
 )
-slash = SlashCommand(bot, sync_commands=True)
 
 
 # # functions
@@ -95,13 +93,10 @@ async def on_command_error(ctx, error):
 check = False
 if not os.path.exists(f'{bot_location}.env'):
     with open(f'{bot_location}.env', 'w') as file:
-        file.write('token=BotToken\nprefix=!\nmongourl=MongoDBUrl')
+        file.write('token=BotToken\nprefix=!\ndatabase=data.db')
         print(f'{current_time()} - Created .env file')
-elif os.getenv('token') != 'BotToken' and os.getenv('mongourl') != 'MongoDBUrl':
-    check = True
-if not check:
+elif os.getenv('token') == 'BotToken':
     quit(f'{current_time()} - Please configure the .env file before starting')
-
 
 # load cogs
 for file in os.listdir(f'{bot_location}cogs'):

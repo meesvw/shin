@@ -245,15 +245,15 @@ class Embeds(commands.Cog):
         )
         embed.add_field(
             name='Redenen',
-            value=user_warnings[menu_number]['warning']
+            value=user_warnings[menu_number][2]
         )
         embed.add_field(
             name='ID',
-            value=f'`{user_warnings[menu_number]["_id"]}`'
+            value=f'`{user_warnings[menu_number][0]}`'
         )
         embed.set_footer(
             text=f'{menu_number+1}/{len(user_warnings)} '
-                 f'Door: {user_warnings[menu_number]["warner"]} - {user_warnings[menu_number]["time"]}'
+                 f'Door: {user_warnings[menu_number][3]} - {user_warnings[menu_number][4]}'
         )
         return embed
 

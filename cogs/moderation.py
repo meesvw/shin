@@ -3,7 +3,6 @@ import database
 import discord
 from datetime import datetime
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
 
 
 def current_time():
@@ -80,39 +79,6 @@ class Moderation(commands.Cog):
         await message.pin()
         await self.bot.get_channel(734365925620580402).send(embed=await embeds.lobby_cleared(ctx.author))
 
-    # clear lobby command slash
-    @cog_ext.cog_slash(
-        name='lobby',
-        guild_ids=[647884034676097056],
-        description='Maakt de lobby leeg'
-    )
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
-    async def _lobby(self, ctx: SlashContext):
-        if ctx.channel.id != 696859692684541983:
-            return await ctx.send(f'Hey {ctx.author.mention} dit is niet de lobby!')
-
-        await ctx.defer()
-
-        embeds = self.bot.get_cog('Embeds')
-
-        await ctx.channel.purge(limit=100)
-        message = await ctx.channel.send('**Waarom zie ik zo weinig kanalen ?**\n'
-                               'Dat komt omdat je momenteel niet geverifieerd bent. '
-                               'Toegang tot de rest van de server / kanalen wordt verleend na ontvangst van de '
-                               'geverifieerde rol, die handmatig wordt toegewezen door een moderator bij voltooien '
-                               'van het verificatieproces.\n\n'
-                               '**Waarom ben ik niet toegelaten?**\n'
-                               'Dat zou kunnen omdat je niet je rollen hebt geselecteerd of je hebt niet gezegd waarom'
-                               ' je de server bent gejoined.\n\n'
-                               '**Hoe kan ik geverifieerd worden?**\n'
-                               'Wanneer je de server joined dan moet je even je rollen selecteren en aan een moderator '
-                               'vertellen waarom je de server bent gejoined! Als een moderator vindt dat jij niet past '
-                               'bij onze server dan heeft de moderator het recht om jou te weigeren.')
-        await message.pin()
-        await self.bot.get_channel(734365925620580402).send(embed=await embeds.lobby_cleared(ctx.author))
-
     # show avatar command prefix
     @commands.command()
     @commands.guild_only()
@@ -123,19 +89,6 @@ class Moderation(commands.Cog):
         embeds = self.bot.get_cog('Embeds')
         return await ctx.send(embed=await embeds.user_avatar(user))
 
-    # show avatar command slash
-    @cog_ext.cog_slash(
-        name='avatar',
-        guild_ids=[647884034676097056],
-        description='Laat de profielfoto van een user zien'
-    )
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
-    async def _avatar(self, ctx: SlashContext, user: discord.User):
-        embeds = self.bot.get_cog('Embeds')
-        return await ctx.send(embed=await embeds.user_avatar(user))
-
     # # welcome commands
     # welcome command prefix
     @commands.command()
@@ -143,49 +96,9 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def welkom(self, ctx: SlashContext, user: discord.Member):
+    async def welkom(self, ctx, user: discord.Member):
         await ctx.message.delete()
 
-        add_role = ctx.guild.get_role(668825700798693377)
-        remove_role = ctx.guild.get_role(685607372428804104)
-
-        if add_role in user.roles:
-            return await ctx.send(f'Hey {ctx.author.mention} deze gebruiker is al toegelaten!')
-
-        await user.remove_roles(
-            remove_role,
-            reason='Toegelaten tot de server'
-        )
-
-        await user.add_roles(
-            add_role,
-            reason='Toegelaten tot de server'
-        )
-
-        introductie_channel = self.bot.get_channel(670218992211853344)
-
-        embeds = self.bot.get_cog('Embeds')
-
-        await user.send(embed=await embeds.welcome_dm(user, ctx.author, introductie_channel))
-
-        welcome_role = ctx.guild.get_role(701713402745323542)
-        general_channel = self.bot.get_channel(671066993792647191)
-
-        await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_gegeven(ctx.author, user))
-        await general_channel.send(f'{welcome_role.mention} Hiep hiep hoera, er is een nieuw lid bij genaamd '
-                                   f'{user.mention} 🎉')
-
-    # welcome command slash
-    @cog_ext.cog_slash(
-        name='welkom',
-        guild_ids=[647884034676097056],
-        description='Geeft een gebruiker in de lobby toegang'
-    )
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
-    async def _welkom(self, ctx: SlashContext, user: discord.Member):
-        await ctx.defer()
         add_role = ctx.guild.get_role(668825700798693377)
         remove_role = ctx.guild.get_role(685607372428804104)
 
@@ -221,42 +134,13 @@ class Moderation(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def weiger(self, ctx: SlashContext, user: discord.Member):
+    async def weiger(self, ctx, user: discord.Member):
         await ctx.message.delete()
 
         role = ctx.guild.get_role(668825700798693377)
 
         if ctx.author == user:
             return await ctx.send(f'Hey {ctx.author.mention} je kan jezelf niet weigeren')
-
-        if role not in user.roles and not user.bot:
-            await user.send(f'**Je bent uit Cosplayers From NL gezet {user.mention}.**\n'
-                            f'Dit kwam doordat je niet geverifieerd was of ongeschikt was voor de server. '
-                            f'Denk je dat dit een fout was of wil je het opnieuw proberen kan je via deze link joinen: '
-                            f'\nhttps://discord.gg/AjHwdycCkh')
-            await user.kick(reason='Geweigerd voor de server')
-        else:
-            return await ctx.send(f'Hey {ctx.author.mention} ik kan deze gebruiker niet weigeren')
-
-        embeds = self.bot.get_cog('Embeds')
-        await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_geweigerd(ctx.author, user))
-
-    # weiger command slash
-    @cog_ext.cog_slash(
-        name='weiger',
-        guild_ids=[647884034676097056],
-        description='Weiger een user in de lobby'
-    )
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
-    async def _weiger(self, ctx: SlashContext, user: discord.Member):
-        role = ctx.guild.get_role(668825700798693377)
-
-        if ctx.author == user:
-            return await ctx.send(f'Hey {ctx.author.mention} je kan jezelf niet weigeren')
-
-        await ctx.defer()
 
         if role not in user.roles and not user.bot:
             await user.send(f'**Je bent uit Cosplayers From NL gezet {user.mention}.**\n'
@@ -331,7 +215,7 @@ class Moderation(commands.Cog):
                     if str(reaction.emoji) == '▶' and menu_number != len(user_warnings)-1:
                         menu_number += 1
                     if str(reaction.emoji) == '❌':
-                        await cosplayer.remove_warning(user_warnings[menu_number]['_id'])
+                        await cosplayer.remove_warning(user_warnings[menu_number][0])
                         user_warnings = await cosplayer.get_warnings()
                         menu_number = 0
 

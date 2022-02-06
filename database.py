@@ -1,12 +1,12 @@
 import os
-import pymongo
-import random
-import string
+import sqlite3
+from random import choice
+from string import ascii_letters, digits
 from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
-client = pymongo.MongoClient(os.getenv('mongourl'))
+database_file = os.getenv('database')
 
 
 def current_time():
@@ -14,7 +14,20 @@ def current_time():
 
 
 def random_id():
-    return ''.join(random.choice(string.ascii_letters + string.digits) for i in range(6))
+    return ''.join(choice(ascii_letters + digits) for i in range(6))
+
+
+def create_database():
+    with sqlite3.connect(database_file) as connection:
+        cursor = connection.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS warnings (
+            id TEXT PRIMARY KEY,
+            user_id INT,
+            warning TEXT,
+            warner TEXT,
+            time TEXT
+        );''')
+        connection.commit()
 
 
 class Cosplayer:
@@ -22,24 +35,22 @@ class Cosplayer:
         self.user_id = user_id
 
     async def get_warnings(self):
-        return list(client['logs']['warnings'].find({'user_id': self.user_id}))
+        with sqlite3.connect(database_file) as connection:
+            cursor = connection.cursor()
+            cursor.execute('''SELECT * FROM warnings WHERE user_id=?''', (self.user_id,))
+            results = cursor.fetchall()
+        return results  # RETURN LIST HERE
 
     async def add_warning(self, warner: str, warning: str):
         try:
-            cl = client['logs']['warnings']
-
-            rid = random_id()
-            while cl.find_one({'_id': rid}):
-                rid = random_id()
-
-            cl.insert_one({
-                '_id': rid,
-                'user_id': self.user_id,
-                'warning': warning,
-                'warner': warner,
-                'time': current_time()
-            })
-
+            with sqlite3.connect(database_file) as connection:
+                cursor = connection.cursor()
+                cursor.execute(
+                    '''INSERT INTO warnings (id, user_id, warning, warner, time) VALUES (?, ?, ?, ?, ?)''', (
+                        random_id(), self.user_id, warning, warner, current_time()
+                    )
+                )
+                connection.commit()
             return True
         except Exception as e:
             print(f'{current_time()} - Error: {e}')
@@ -47,7 +58,10 @@ class Cosplayer:
 
     async def remove_warning(self, warning_number):
         try:
-            client['logs']['warnings'].delete_one({'_id': warning_number, 'user_id': self.user_id})
+            with sqlite3.connect(database_file) as connection:
+                cursor = connection.cursor()
+                cursor.execute('''DELETE FROM warnings WHERE id=?''', (warning_number,))
+                connection.commit()
             return True
         except Exception as e:
             print(f'{current_time()} - Error: {e}')
@@ -55,8 +69,14 @@ class Cosplayer:
 
     async def reset_warnings(self):
         try:
-            client['logs']['warnings'].delete_many({'user_id': self.user_id})
+            with sqlite3.connect(database_file) as connection:
+                cursor = connection.cursor()
+                cursor.execute('''DELETE FROM warnings WHERE user_id=?''', (self.user_id,))
+                connection.commit()
             return True
         except Exception as e:
             print(f'{current_time()} - Error: {e}')
             return 'error'
+
+
+create_database()
