@@ -161,7 +161,7 @@ class Embeds(commands.Cog):
             color=discord.Color.blue()
         )
         embed.set_author(
-            name=f'{clearer.mention} heeft de lobby leeg gemaakt',
+            name=f'{clearer.name} heeft de lobby leeg gemaakt',
             icon_url=clearer.avatar_url
         )
         return embed
