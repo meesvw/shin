@@ -125,7 +125,7 @@ class Embeds(commands.Cog):
             icon_url=leaver.avatar_url
         )
         embed.add_field(
-            name="Gebruiker: " + leaver.name + "#" + leaver.discriminator,
+            name="Gebruiker: ",
             value=leaver.mention,
             inline=False
         )
