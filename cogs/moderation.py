@@ -125,8 +125,11 @@ class Moderation(commands.Cog):
         general_channel = self.bot.get_channel(671066993792647191)
 
         await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_gegeven(ctx.author, user))
-        await general_channel.send(f'{welcome_role.mention} Hiep hiep hoera, er is een nieuw lid bij genaamd '
-                                   f'{user.mention} 🎉')
+        try:
+            await general_channel.send(f'{welcome_role.mention} Hiep hiep hoera, er is een nieuw lid bij genaamd '
+                                       f'{user.mention} 🎉')
+        except Exception as e:
+            print(e)
 
     # weiger command prefix
     @commands.command()
