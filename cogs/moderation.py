@@ -219,16 +219,16 @@ class Moderation(commands.Cog):
     )
     async def introduceer(self, ctx, user: discord.User):
         await ctx.message.delete()
-        introductie_channel = self.bot.get_channel(670218992211853344)
+        # introductie_channel = self.bot.get_channel(670218992211853344)
 
         embeds = self.bot.get_cog('Embeds')
 
-        await user.send(embed=await embeds.welcome_dm(user, ctx.author, introductie_channel))
+        # await user.send(embed=await embeds.welcome_dm(user, ctx.author, introductie_channel))
 
         welcome_role = ctx.guild.get_role(701713402745323542)
         general_channel = self.bot.get_channel(671066993792647191)
 
-        await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_gegeven(ctx.author, user))
+        # await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_gegeven(ctx.author, user))
         try:
             await general_channel.send(f'{welcome_role.mention} Hiep hiep hoera, er is een nieuw lid bij genaamd '
                                        f'{user.mention} 🎉')
