@@ -27,6 +27,10 @@ def create_database():
             warner TEXT,
             time TEXT
         );''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS economy (
+            user_id INT PRIMARY KEY,
+            coins INT
+        );''')
         connection.commit()
 
 
@@ -34,6 +38,47 @@ class Cosplayer:
     def __init__(self, user_id):
         self.user_id = user_id
 
+    # economy
+    async def create_wallet(self):
+        with sqlite3.connect(database_file) as connection:
+            try:
+                cursor = connection.cursor()
+                cursor.execute('''INSERT INTO economy (user_id, coins) VALUES (?, ?)''', (self.user_id, 0))
+                connection.commit()
+            except Exception as e:
+                print(f'{current_time()} - Error: {e}')
+                return 'error'
+        return True
+
+    async def get_coins(self):
+        try:
+            with sqlite3.connect(database_file) as connection:
+                cursor = connection.cursor()
+                results = False
+                while not results:
+                    cursor.execute('''SELECT * FROM economy WHERE user_id=?''', (self.user_id,))
+                    results = cursor.fetchall()
+                    if results:
+                        return results[0][1]
+                    else:
+                        await self.create_wallet()
+        except Exception as e:
+            print(f'{current_time()} - Error: {e}')
+            return 'error'
+
+    async def update_coins(self, coins: int):
+        try:
+            with sqlite3.connect(database_file) as connection:
+                old_coins = int(await self.get_coins())
+                cursor = connection.cursor()
+                cursor.execute('''UPDATE economy SET coins=? WHERE user_id=?''', (old_coins + coins, self.user_id))
+                connection.commit()
+            return True
+        except Exception as e:
+            print(f'{current_time()} - Error: {e}')
+            return 'error'
+
+    # warnings
     async def get_warnings(self):
         with sqlite3.connect(database_file) as connection:
             cursor = connection.cursor()

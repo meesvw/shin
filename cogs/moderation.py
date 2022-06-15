@@ -30,6 +30,62 @@ class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # # economy
+    # get user coins
+    @commands.command()
+    async def coins(self, ctx, user: discord.User = None):
+        if not user:
+            user = ctx.author
+
+        cosplayer = database.Cosplayer(user.id)
+        coins = await cosplayer.get_coins()
+
+        if user == ctx.author:
+            return await ctx.send(f'Hey {ctx.author.mention} je hebt `{coins}` coins')
+        return await ctx.send(f'Hey {ctx.author.mention} {user.name} heeft `{coins}` coins')
+
+    @commands.command()
+    async def betaal(self, ctx, user: discord.User, coins: int):
+        if ctx.author == user:
+            return await ctx.send(f'Hey {ctx.author.mention} je kan niet jezelf betalen!')
+
+        if coins < 1:
+            return await ctx.send(f'Hey {ctx.author.mention} je moet minimaal `1` coin geven!')
+
+        embeds = self.bot.get_cog('Embeds')
+
+        betaler = database.Cosplayer(ctx.author.id)
+        ontvanger = database.Cosplayer(user.id)
+
+        if await betaler.get_coins() < coins:
+            return await ctx.send(f'Hey {ctx.author.mention} je hebt niet genoeg coins!')
+
+        if await ontvanger.update_coins(coins) and await betaler.update_coins(-abs(coins)):
+            return await ctx.send(f'Hey {ctx.author.mention} je hebt {user.name} `{coins}` gegeven')
+        else:
+            return await ctx.send(embed=await embeds.error())
+
+    # give user coins
+    @commands.command()
+    @commands.has_any_role(
+        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
+    )
+    async def doneer(self, ctx, user: discord.User, coins: int):
+        cosplayer = database.Cosplayer(user.id)
+        embeds = self.bot.get_cog('Embeds')
+        if await cosplayer.update_coins(coins):
+            if user == ctx.author:
+                return await ctx.send(f'Hey {ctx.author.mention} je hebt jezelf `{coins}` gegeven!')
+            return await ctx.send(f'Hey {ctx.author.mention} je hebt {user.name} `{coins}` gegeven!')
+        else:
+            return await ctx.send(embed=await embeds.error())
+
+    # daily
+    @commands.command()
+    @commands.guild_only()
+    async def daily(self, ctx):
+        return await ctx.send(f'Hey {ctx.author.mention} deze functie werkt nog niet!')
+
     # # utility
     # clear messages command prefix
     @commands.command()
@@ -48,8 +104,6 @@ class Moderation(commands.Cog):
     async def clear_error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
             return await ctx.send(f'Hey {ctx.author.mention} je kan alleen nummers gebruiken!')
-
-    # clear messages command slash
 
     # clear lobby command prefix
     @commands.command()
@@ -156,6 +210,30 @@ class Moderation(commands.Cog):
 
         embeds = self.bot.get_cog('Embeds')
         await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_geweigerd(ctx.author, user))
+
+    # introductie command
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_any_role(
+        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
+    )
+    async def introduceer(self, ctx, user: discord.User):
+        await ctx.message.delete()
+        introductie_channel = self.bot.get_channel(670218992211853344)
+
+        embeds = self.bot.get_cog('Embeds')
+
+        await user.send(embed=await embeds.welcome_dm(user, ctx.author, introductie_channel))
+
+        welcome_role = ctx.guild.get_role(701713402745323542)
+        general_channel = self.bot.get_channel(671066993792647191)
+
+        await self.bot.get_channel(734365925620580402).send(embed=await embeds.toegang_gegeven(ctx.author, user))
+        try:
+            await general_channel.send(f'{welcome_role.mention} Hiep hiep hoera, er is een nieuw lid bij genaamd '
+                                       f'{user.mention} 🎉')
+        except Exception as e:
+            print(e)
 
     # # warning commands
     # warn command
