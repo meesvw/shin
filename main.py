@@ -95,7 +95,13 @@ async def on_command_error(ctx, error):
         message = await ctx.send(
             f'Hey {ctx.author.mention} Je moet `{time[0]}`uur `{time[1]}`minuten en `{(time[2])[:2]}` seconden wachten!'
         )
-        await asyncio.sleep(5)
+
+        for i in range(1, 5):
+            time = str(timedelta(seconds=error.retry_after - i)).split(':')
+            await message.edit(
+                content=f'Hey {ctx.author.mention} Je moet `{time[0]}`uur `{time[1]}`minuten en `{(time[2])[:2]}` seconden wachten!'
+            )
+            await asyncio.sleep(1)
         return await message.delete()
 
 # check .env
