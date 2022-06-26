@@ -1,6 +1,7 @@
+import asyncio
 import discord
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -88,6 +89,14 @@ async def on_command_error(ctx, error):
             f'{str(error).split(" ")[0]} moet worden ingevuld! '
             f'Voorbeeld: `!{ctx.command.name} {str(error).split(" ")[0]}`'
         )
+
+    if isinstance(error, commands.CommandOnCooldown):
+        time = str(timedelta(seconds=error.retry_after)).split(':')
+        message = await ctx.send(
+            f'Hey {ctx.author.mention} Je moet `{time[0]}`uur `{time[1]}`minuten en `{(time[2])[:2]}` seconden wachten!'
+        )
+        await asyncio.sleep(5)
+        return await message.delete()
 
 # check .env
 check = False
