@@ -382,7 +382,7 @@ class Moderation(commands.Cog):
             if reason is None:
                 reason = 'Geen redenen opgegeven.'
 
-            await user.send(f'Je bent gebanned uit Cosplayers van NL voor deze redenen: {reason}')
+            await user.send(f'Je bent gebanned uit Cosplayers van NL voor deze redenen: ```text\n{reason}\n```')
             await user.ban(reason=reason)
             await log_channel.send(embed=await embeds.ban(user, ctx.author, reason))
             await ctx.send(embed=await embeds.ban_short(user))
