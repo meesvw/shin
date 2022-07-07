@@ -224,15 +224,15 @@ class Moderation(commands.Cog):
             for emoji in emoji_list:
                 await message.add_reaction(emoji=emoji)
 
-            def check(reaction, user):
-                return user == ctx.author and str(reaction.emoji) in emoji_list and reaction.message.id == \
+            def check(reaction, main_user):
+                return main_user == ctx.author and str(reaction.emoji) in emoji_list and reaction.message.id == \
                        message.id
 
             await message.edit(embed=await embeds.warnings(user, user_warnings, menu_number))
 
             while True:
                 try:
-                    reaction, user = await self.bot.wait_for('reaction_add', timeout=20, check=check)
+                    reaction, main_user = await self.bot.wait_for('reaction_add', timeout=20, check=check)
                     await message.remove_reaction(str(reaction.emoji), ctx.author)
 
                     if str(reaction.emoji) == '◀' and menu_number > 0:
@@ -382,6 +382,7 @@ class Moderation(commands.Cog):
             if reason is None:
                 reason = 'Geen redenen opgegeven.'
 
+            await user.send(f'Je bent gebanned uit Cosplayers van NL voor deze redenen: {reason}')
             await user.ban(reason=reason)
             await log_channel.send(embed=await embeds.ban(user, ctx.author, reason))
             await ctx.send(embed=await embeds.ban_short(user))
