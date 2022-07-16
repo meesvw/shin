@@ -311,6 +311,10 @@ class Moderation(commands.Cog):
             if user == ctx.author:
                 return await ctx.send(f'{ctx.author.mention} je kan jezelf niet mute!')
 
+            # check if user is in voice
+            if user.voice:
+                await user.move_to(None)
+
             await user.add_roles(add_role, reason=f'Muted door {ctx.author.name}')
             await ctx.send(embed=await embeds.user_muted_short(user))
             await self.bot.get_channel(734365925620580402).send(embed=await embeds.user_muted(user, ctx.author))
