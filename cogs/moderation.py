@@ -25,10 +25,19 @@ IDs:
 Kazoku      = 668825700798693377
 """
 
-team_roles = (669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741)
+# roles dict
+dict_roles = {
+    'proxy':        669181460124532736,
+    'hoofd yuuto':  697198873495470090,
+    'yuuto':        669371769672564776,
+    'trial yuuto':  705844874590552365,
+    'dev team':     750673616584048741,
+    'kazoku':       668825700798693377
+}
 
-# Excludes Trail-Yuuto
-high_roles = (669181460124532736, 697198873495470090, 669371769672564776, 750673616584048741)
+# roles tuples
+team_roles = (669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741)
+high_roles = (669181460124532736, 697198873495470090, 669371769672564776, 750673616584048741)  # Excludes Trail-Yuuto
 
 
 class Moderation(commands.Cog):
@@ -55,9 +64,7 @@ class Moderation(commands.Cog):
     # clear lobby command prefix
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def lobby(self, ctx):
         if ctx.channel.id != 696859692684541983:
             return await ctx.send(f'Hey {ctx.author.mention} dit is niet de lobby!')
@@ -83,9 +90,7 @@ class Moderation(commands.Cog):
     # show avatar command prefix
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def avatar(self, ctx, user: discord.User):
         embeds = self.bot.get_cog('Embeds')
         return await ctx.send(embed=await embeds.user_avatar(user))
@@ -94,9 +99,7 @@ class Moderation(commands.Cog):
     # welcome command prefix
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def welkom(self, ctx, user: discord.Member):
         await ctx.message.delete()
 
@@ -135,9 +138,7 @@ class Moderation(commands.Cog):
     # weiger command prefix
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def weiger(self, ctx, user: discord.Member):
         await ctx.message.delete()
 
@@ -161,9 +162,7 @@ class Moderation(commands.Cog):
     # introductie command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def introduceer(self, ctx, user: discord.User):
         await ctx.message.delete()
         # introductie_channel = self.bot.get_channel(670218992211853344)
@@ -186,9 +185,7 @@ class Moderation(commands.Cog):
     # warn command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def warn(self, ctx, users: commands.Greedy[discord.User], *, warning='Geen redenen gegeven'):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
@@ -205,9 +202,7 @@ class Moderation(commands.Cog):
     # show warnings command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def warnings(self, ctx, user: discord.User = None):
         await ctx.message.delete()
         embeds = self.bot.get_cog('Embeds')
@@ -266,9 +261,7 @@ class Moderation(commands.Cog):
     # pardon command
     @commands.command(aliases=['vergeef'])
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def pardon(self, ctx, user: discord.User, warning_number=None):
         await ctx.message.delete()
         embeds = self.bot.get_cog('Embeds')
@@ -297,9 +290,7 @@ class Moderation(commands.Cog):
     # mute command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def mute(self, ctx, users: commands.Greedy[discord.Member]):
         embeds = self.bot.get_cog('Embeds')
         add_role = ctx.guild.get_role(671073771246845960)
@@ -325,9 +316,7 @@ class Moderation(commands.Cog):
     # unmute command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def unmute(self, ctx, user: discord.Member):
         embeds = self.bot.get_cog('Embeds')
         remove_role = ctx.guild.get_role(671073771246845960)
@@ -342,9 +331,7 @@ class Moderation(commands.Cog):
     # kick command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def kick(self, ctx, users: commands.Greedy[discord.Member], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
         if not users:
@@ -368,9 +355,7 @@ class Moderation(commands.Cog):
     # ban command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 750673616584048741
-    )
+    @commands.has_any_role(*high_roles)
     async def ban(self, ctx, users: commands.Greedy[discord.Member], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
         log_channel = self.bot.get_channel(744259944760737795)
@@ -399,9 +384,7 @@ class Moderation(commands.Cog):
     # geef verjaardag role command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def verjaardag(self, ctx, user: discord.Member):
         if ctx.guild.get_role(670769561926369280) in user.roles:
             return await ctx.send(f'Hey {ctx.author.mention} deze persoon is al jarig!')
@@ -412,9 +395,7 @@ class Moderation(commands.Cog):
     # verwijder verjaardag role command
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(
-        669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
-    )
+    @commands.has_any_role(*team_roles)
     async def verwijderverjaardag(self, ctx, user: discord.Member):
         if ctx.guild.get_role(670769561926369280) not in user.roles:
             return await ctx.send(f'Hey {ctx.author.mention} deze persoon is niet jarig!')
@@ -425,7 +406,8 @@ class Moderation(commands.Cog):
     # Suggestie command.
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(668825700798693377)
+    @commands.has_any_role(dict_roles['kazoku'])
+#    @commands.has_any_role(668825700798693377)
     async def suggestie(self, ctx, *, text=None):
         await ctx.message.delete()
 
