@@ -39,7 +39,7 @@ class Moderation(commands.Cog):
     # clear messages command prefix
     @commands.command()
     @commands.guild_only()
-    @commands.has_any_role(team_roles)
+    @commands.has_any_role(*team_roles)
     async def clear(self, ctx, amount: int):
         if amount < 1:
             return await ctx.send(f'Hey {ctx.author.mention} ik heb een positief getal nodig!')
