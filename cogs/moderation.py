@@ -407,7 +407,6 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.guild_only()
     @commands.has_any_role(dict_roles['kazoku'])
-#    @commands.has_any_role(668825700798693377)
     async def suggestie(self, ctx, *, text=None):
         await ctx.message.delete()
 
@@ -431,7 +430,11 @@ class Moderation(commands.Cog):
             try:
                 reaction, user = await self.bot.wait_for('reaction_add', timeout=86400, check=check)
                 log_channel = self.bot.get_channel(734365925620580402)
-                await log_channel.send(embed=await embeds.suggestie_report(user, message))
+                yuuto_role = ctx.guild.get_role(dict_roles['yuuto'])
+                await log_channel.send(
+                    content=f'{yuuto_role.mention}',
+                    embed=await embeds.suggestie_report(user, message)
+                )
             except asyncio.TimeoutError:
                 break
 
