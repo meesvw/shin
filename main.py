@@ -54,7 +54,7 @@ async def on_member_join(member):
         reason='Joined server'
     )
     regels_channel = 669161755972206629
-    roles_channel = 935961075407523900
+    roles_channel = 997578258038132816
     await bot.get_channel(722771390092279819).send(embed=await embeds.join_log(member))
     await bot.get_channel(696859692684541983).send(
         f'Welkom {member.mention}! Lees alvast de <#{regels_channel}> en selecteer je <#{roles_channel}>, '
