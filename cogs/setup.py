@@ -34,5 +34,5 @@ class Setup(commands.Cog):
         return await ctx.send(embed=await embeds.status_changed_short())
 
 
-def setup(bot):
-    bot.add_cog(Setup(bot))
+async def setup(bot):
+    await bot.add_cog(Setup(bot))

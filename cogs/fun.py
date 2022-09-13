@@ -4,7 +4,7 @@ import urllib.request
 from discord.ext import commands
 
 
-class Communication(commands.Cog):
+class Socializing(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -45,5 +45,5 @@ class Communication(commands.Cog):
         await ctx.send(f'{ctx.author.mention} winked at {user.mention}', embed=embed)
 
 
-def setup(bot):
-    bot.add_cog(Communication(bot))
+async def setup(bot):
+    await bot.add_cog(Socializing(bot))

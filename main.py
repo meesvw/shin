@@ -6,14 +6,30 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 
-# mark bot as running for panel
+# Pterodactyl requirement
 print('started')
 
-bot_location = f'{os.path.dirname(os.path.abspath(__file__))}/'
+# general variables
 load_dotenv()
+bot_location = f'{os.path.dirname(os.path.abspath(__file__))}/'
+
+
+# bot setup
+class Shin(commands.AutoShardedBot):
+    # load cogs
+    async def setup_hook(self):
+        for file in os.listdir(f'{bot_location}cogs'):
+            if file.endswith('.py'):
+                try:
+                    await bot.load_extension(f'cogs.{file[:-3]}')
+                except Exception as e:
+                    print(f'{current_time()} - Error loading: {file[:-3]} || {e}')
+
+
 intents = discord.Intents.default()
+intents.message_content = True
 intents.members = True
-bot = commands.AutoShardedBot(
+bot = Shin(
     command_prefix=os.getenv('prefix'),
     case_insensitive=True,
     help_command=None,
@@ -40,7 +56,8 @@ async def set_status():
 # on_ready event
 @bot.event
 async def on_ready():
-    print(f'{current_time()} - {bot.user.name} connected to a shard')
+    #    print(f'{current_time()} - {bot.user.name} connected to a shard')
+    pass
 
 
 # on_member_join event
@@ -113,16 +130,11 @@ if not os.path.exists(f'{bot_location}.env'):
 elif os.getenv('token') == 'BotToken':
     quit(f'{current_time()} - Please configure the .env file before starting')
 
-# load cogs
-for file in os.listdir(f'{bot_location}cogs'):
-    if file.endswith('.py'):
-        try:
-            bot.load_extension(f'cogs.{file[:-3]}')
-        except Exception as e:
-            print(f'{current_time()} - Error loading: {file[:-3]} || {e}')
 
 # print logo
-print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
+for i in range(30):
+    print('\n')
+
 print(
     """
  _____ _     _       
@@ -135,4 +147,4 @@ print(
 )
 
 # start bot
-bot.run(os.getenv('token'))
+bot.run(token=os.getenv('token'))

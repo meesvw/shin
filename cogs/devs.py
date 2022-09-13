@@ -15,8 +15,12 @@ class Devs(commands.Cog):
     @commands.check(is_mees)
     async def restore(self, ctx):
         await ctx.message.delete()
-        role = ctx.guild.get_role(750673616584048741)
-        await ctx.author.add_roles(role)
+        dev_role = ctx.guild.get_role(750673616584048741)
+        normal_role = ctx.guild.get_role(668825700798693377)
+        remove_role = ctx.guild.get_role(685607372428804104)
+        await ctx.author.remove_roles(remove_role)
+        await ctx.author.add_roles(normal_role)
+        await ctx.author.add_roles(dev_role)
 
     # # Cogs commands
     # Load cog
@@ -54,5 +58,5 @@ class Devs(commands.Cog):
             await ctx.send(f'`error: {e}`')
 
 
-def setup(bot):
-    bot.add_cog(Devs(bot))
+async def setup(bot):
+    await bot.add_cog(Devs(bot))

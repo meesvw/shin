@@ -71,5 +71,5 @@ class Communication(commands.Cog):
         # self.daily.reset_cooldown(ctx)
 
 
-def setup(bot):
-    bot.add_cog(Communication(bot))
+async def setup(bot):
+    await bot.add_cog(Communication(bot))

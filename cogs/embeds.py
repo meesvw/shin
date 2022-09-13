@@ -16,7 +16,7 @@ class Embeds(commands.Cog):
             name=f'{user.name}\'s avatar'
         )
         embed.set_image(
-            url=user.avatar_url
+            url=user.display_avatar
         )
         return embed
 
@@ -27,7 +27,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{user.name} heeft status veranderd',
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         embed.add_field(
             name='Nieuwe status',
@@ -52,7 +52,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name="Bereid wat dingen voor!",
-            icon_url=self.bot.user.avatar_url
+            icon_url=self.bot.user.display_avatar
         )
         return embed
 
@@ -63,7 +63,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f"oops iets ging verkeerd..",
-            icon_url=self.bot.user.avatar_url
+            icon_url=self.bot.user.display_avatar
         )
         embed.add_field(
             name="Weer dit bericht?",
@@ -79,7 +79,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name="Join | " + joiner.name + "#" + joiner.discriminator,
-            icon_url=joiner.avatar_url
+            icon_url=joiner.display_avatar
         )
         embed.add_field(
             name="Gebruiker-ID: ",
@@ -97,7 +97,7 @@ class Embeds(commands.Cog):
             inline=False
         )
         embed.set_thumbnail(
-            url=joiner.avatar_url
+            url=joiner.display_avatar
         )
         return embed
 
@@ -111,7 +111,7 @@ class Embeds(commands.Cog):
         )
         embed.set_footer(
             text=f'{toelater.name} heeft je toegang gegeven',
-            icon_url=toelater.avatar_url
+            icon_url=toelater.display_avatar
         )
         return embed
 
@@ -122,7 +122,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name="Left | " + leaver.name + "#" + leaver.discriminator,
-            icon_url=leaver.avatar_url
+            icon_url=leaver.display_avatar
         )
         embed.add_field(
             name="Gebruiker: ",
@@ -150,7 +150,7 @@ class Embeds(commands.Cog):
             inline=False
         )
         embed.set_thumbnail(
-            url=leaver.avatar_url
+            url=leaver.display_avatar
         )
         return embed
 
@@ -162,7 +162,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{clearer.name} heeft de lobby leeg gemaakt',
-            icon_url=clearer.avatar_url
+            icon_url=clearer.display_avatar
         )
         return embed
 
@@ -173,7 +173,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{toelater.name} heeft toegang gegeven aan {toegelaten.name}',
-            icon_url=toelater.avatar_url
+            icon_url=toelater.display_avatar
         )
         return embed
 
@@ -184,7 +184,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{weigeraar.name} heeft {geweigerde.name} geweigerd',
-            icon_url=weigeraar.avatar_url
+            icon_url=weigeraar.display_avatar
         )
         return embed
 
@@ -196,7 +196,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{muter.name} heeft {muted.name} gemute',
-            icon_url=muter.avatar_url
+            icon_url=muter.display_avatar
         )
         return embed
 
@@ -207,7 +207,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{muted.name} is gemute',
-            icon_url=muted.avatar_url
+            icon_url=muted.display_avatar
         )
         return embed
 
@@ -218,7 +218,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{unmuter.name} heeft {muted.name} geunmute',
-            icon_url=unmuter.avatar_url
+            icon_url=unmuter.display_avatar
         )
         return embed
 
@@ -229,7 +229,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{muted.name} is geunmute',
-            icon_url=muted.avatar_url
+            icon_url=muted.display_avatar
         )
         return embed
 
@@ -241,7 +241,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=user.name,
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         embed.add_field(
             name='Redenen',
@@ -264,7 +264,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f"{user.name} is gewaarschuwd",
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         embed.add_field(
             name="Redenen",
@@ -284,7 +284,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{warner.name} heeft {user.name} gewaarschuwd',
-            icon_url=warner.avatar_url
+            icon_url=warner.display_avatar
         )
         return embed
 
@@ -295,7 +295,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f"{user.name} heeft geen waarschuwingen",
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         return embed
 
@@ -306,7 +306,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{vergever.name}#{vergever.discriminator} heeft {user.name}#{user.discriminator} vergeven',
-            icon_url=vergever.avatar_url
+            icon_url=vergever.display_avatar
         )
         return embed
 
@@ -317,7 +317,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f"{user.name} is vergeven",
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         return embed
 
@@ -328,7 +328,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name="Waarschuwing niet gevonden",
-            icon_url=self.bot.user.avatar_url
+            icon_url=self.bot.user.display_avatar
         )
         embed.add_field(
             name="Nummer correct?",
@@ -344,7 +344,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{user.name} is gekicked',
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         embed.add_field(
             name='Redenen',
@@ -357,7 +357,7 @@ class Embeds(commands.Cog):
         )
         embed.set_footer(
             text=f'Kicked door {kicker.name}#{kicker.discriminator}',
-            icon_url=kicker.avatar_url
+            icon_url=kicker.display_avatar
         )
         return embed
 
@@ -368,7 +368,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{user.name} is gekicked',
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         return embed
 
@@ -380,7 +380,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{user.name} is verbannen',
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         embed.add_field(
             name='Redenen',
@@ -393,7 +393,7 @@ class Embeds(commands.Cog):
         )
         embed.set_footer(
             text=f'Verbannen door {banner.name}#{banner.discriminator}',
-            icon_url=banner.avatar_url
+            icon_url=banner.display_avatar
         )
         return embed
 
@@ -404,7 +404,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{user.name} is verbannen',
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         return embed
 
@@ -416,7 +416,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name='Hier zijn alle commands!',
-            icon_url=self.bot.user.avatar_url
+            icon_url=self.bot.user.display_avatar
         )
         embed.add_field(
             name='Fun',
@@ -460,7 +460,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name='Hier zijn alle commands!',
-            icon_url=self.bot.user.avatar_url
+            icon_url=self.bot.user.display_avatar
         )
         embed.add_field(
             name='Fun',
@@ -478,7 +478,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name="Command mist iets",
-            icon_url=self.bot.user.avatar_url
+            icon_url=self.bot.user.display_avatar
         )
         embed.add_field(
             name=f"Hoe werkt `{command}`",
@@ -494,7 +494,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=author.name,
-            icon_url=author.avatar_url
+            icon_url=author.display_avatar
         )
         embed.add_field(
             name="Suggestie:",
@@ -510,7 +510,7 @@ class Embeds(commands.Cog):
         )
         embed.set_author(
             name=f'{user.name} heeft een bericht gerapporteerd.',
-            icon_url=user.avatar_url
+            icon_url=user.display_avatar
         )
         embed.add_field(
             name='Bericht',
@@ -519,5 +519,5 @@ class Embeds(commands.Cog):
         return embed
 
 
-def setup(bot):
-    bot.add_cog(Embeds(bot))
+async def setup(bot):
+    await bot.add_cog(Embeds(bot))

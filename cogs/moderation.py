@@ -380,6 +380,21 @@ class Moderation(commands.Cog):
             await ctx.send(embed=await embeds.ban_short(user))
             await community_channel.send(embed=await embeds.ban(user, ctx.author, reason))
 
+    # # event commands
+    # open event channel
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_any_role(*team_roles)
+    async def open(self, ctx, *, channel):
+        return
+
+    # close event channel
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_any_role(*team_roles)
+    async def sluit(self, ctx, *, channel):
+        return
+
     # # verjaardag commands
     # geef verjaardag role command
     @commands.command()
@@ -439,5 +454,5 @@ class Moderation(commands.Cog):
                 break
 
 
-def setup(bot):
-    bot.add_cog(Moderation(bot))
+async def setup(bot):
+    await bot.add_cog(Moderation(bot))
