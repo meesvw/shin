@@ -296,7 +296,7 @@ class Moderation(commands.Cog):
         add_role = ctx.guild.get_role(671073771246845960)
 
         if users is None:
-            return await ctx.send(embeds=await embeds.explain('!mute @gebruiker(s) redenen'))
+            return await ctx.send(embeds=await embeds.explain('mute', '!mute @gebruiker(s) redenen'))
 
         for user in users:
             if user.bot:
@@ -335,7 +335,7 @@ class Moderation(commands.Cog):
     async def kick(self, ctx, users: commands.Greedy[discord.Member], *, reason=None):
         embeds = self.bot.get_cog('Embeds')
         if not users:
-            return await ctx.send(embed=await embeds.explain('!kick @gebruiker(s) redenen'))
+            return await ctx.send(embed=await embeds.explain('kick', '!kick @gebruiker(s) redenen'))
 
         for user in users:
             if user.bot:
@@ -362,7 +362,7 @@ class Moderation(commands.Cog):
         community_channel = self.bot.get_channel(717814933705982083)
 
         if not users:
-            return await ctx.send(embed=await embeds.explain('!ban @gebruiker(s) redenen'))
+            return await ctx.send(embed=await embeds.explain('ban', '!ban @gebruiker(s) redenen'))
 
         for user in users:
             if user.bot:
