@@ -26,7 +26,7 @@ class Devs(commands.Cog):
     # Load cog
     @commands.command()
     @commands.check(is_mees)
-    async def load(self, ctx, cog):
+    async def load(self, ctx, cog: str):
         try:
             self.bot.load_extension(f'cogs.{cog}')
             await ctx.send(f'`{cog} loaded`')
@@ -36,7 +36,7 @@ class Devs(commands.Cog):
     # Unload cog
     @commands.command()
     @commands.check(is_mees)
-    async def unload(self, ctx, cog):
+    async def unload(self, ctx, cog: str):
         if cog == 'devs':
             return await ctx.send('`devs cannot be unloaded only updated!`')
 
@@ -49,7 +49,7 @@ class Devs(commands.Cog):
     # Update cog
     @commands.command()
     @commands.check(is_mees)
-    async def update(self, ctx, cog):
+    async def update(self, ctx, cog: str):
         try:
             self.bot.unload_extension(f'cogs.{cog}')
             self.bot.load_extension(f'cogs.{cog}')

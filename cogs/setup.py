@@ -21,7 +21,7 @@ class Setup(commands.Cog):
     @commands.has_any_role(
         669181460124532736, 697198873495470090, 669371769672564776, 705844874590552365, 750673616584048741
     )
-    async def status(self, ctx, *, status):
+    async def status(self, ctx, *, status: str):
         embeds = self.bot.get_cog('Embeds')
         await self.bot.change_presence(
             activity=discord.Activity(

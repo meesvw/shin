@@ -62,7 +62,7 @@ class Moderation(commands.Cog):
             return await ctx.send(f'Hey {ctx.author.mention} je kan alleen nummers gebruiken!')
 
     # clear lobby command prefix
-    @commands.command()
+    @commands.hybrid_command()
     @commands.guild_only()
     @commands.has_any_role(*team_roles)
     async def lobby(self, ctx):
@@ -85,7 +85,7 @@ class Moderation(commands.Cog):
                                'vertellen waarom je de server bent gejoined! Als een moderator vindt dat jij niet past '
                                'bij onze server dan heeft de moderator het recht om jou te weigeren.')
         await message.pin()
-        await self.bot.get_channel(734365925620580402).send(embed=await embeds.lobby_cleared(ctx.author))
+        return await self.bot.get_channel(734365925620580402).send(embed=await embeds.lobby_cleared(ctx.author))
 
     # show avatar command prefix
     @commands.command()
@@ -186,7 +186,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.guild_only()
     @commands.has_any_role(*team_roles)
-    async def warn(self, ctx, users: commands.Greedy[discord.User], *, warning='Geen redenen gegeven'):
+    async def warn(self, ctx, users: commands.Greedy[discord.User], *, warning: str = 'Geen redenen gegeven'):
         await ctx.message.delete()
         embeds = self.bot.get_cog("Embeds")
         for user in users:
@@ -262,7 +262,7 @@ class Moderation(commands.Cog):
     @commands.command(aliases=['vergeef'])
     @commands.guild_only()
     @commands.has_any_role(*team_roles)
-    async def pardon(self, ctx, user: discord.User, warning_number=None):
+    async def pardon(self, ctx, user: discord.User, warning_number: str = None):
         await ctx.message.delete()
         embeds = self.bot.get_cog('Embeds')
 
@@ -332,7 +332,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.guild_only()
     @commands.has_any_role(*team_roles)
-    async def kick(self, ctx, users: commands.Greedy[discord.Member], *, reason=None):
+    async def kick(self, ctx, users: commands.Greedy[discord.Member], *, reason: str = None):
         embeds = self.bot.get_cog('Embeds')
         if not users:
             return await ctx.send(embed=await embeds.explain('kick', '!kick @gebruiker(s) redenen'))
@@ -356,7 +356,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.guild_only()
     @commands.has_any_role(*high_roles)
-    async def ban(self, ctx, users: commands.Greedy[discord.Member], *, reason=None):
+    async def ban(self, ctx, users: commands.Greedy[discord.Member], *, reason: str = None):
         embeds = self.bot.get_cog('Embeds')
         log_channel = self.bot.get_channel(744259944760737795)
         community_channel = self.bot.get_channel(717814933705982083)
@@ -385,15 +385,15 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.guild_only()
     @commands.has_any_role(*team_roles)
-    async def open(self, ctx, *, channel):
-        return
+    async def open(self, ctx, *, channel: str):
+        return await ctx.send(f'{ctx.author.mention} hey deze functie werkt nog niet!')
 
     # close event channel
     @commands.command()
     @commands.guild_only()
     @commands.has_any_role(*team_roles)
-    async def sluit(self, ctx, *, channel):
-        return
+    async def sluit(self, ctx, *, channel: str):
+        return await ctx.send(f'{ctx.author.mention} hey deze functie werkt nog niet!')
 
     # # verjaardag commands
     # geef verjaardag role command
@@ -422,7 +422,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.guild_only()
     @commands.has_any_role(dict_roles['kazoku'])
-    async def suggestie(self, ctx, *, text=None):
+    async def suggestie(self, ctx, *, text: str = None):
         await ctx.message.delete()
 
         if text is None:

@@ -18,12 +18,16 @@ bot_location = f'{os.path.dirname(os.path.abspath(__file__))}/'
 class Shin(commands.AutoShardedBot):
     # load cogs
     async def setup_hook(self):
+        print(f'{current_time()} - Loading cogs')
         for file in os.listdir(f'{bot_location}cogs'):
             if file.endswith('.py'):
                 try:
                     await bot.load_extension(f'cogs.{file[:-3]}')
                 except Exception as e:
                     print(f'{current_time()} - Error loading: {file[:-3]} || {e}')
+
+        print(f'{current_time()} - Syncing command tree')
+        await self.tree.sync()
 
 
 intents = discord.Intents.default()
@@ -56,8 +60,7 @@ async def set_status():
 # on_ready event
 @bot.event
 async def on_ready():
-    #    print(f'{current_time()} - {bot.user.name} connected to a shard')
-    pass
+    print(f'{current_time()} - {bot.user.name} connected to a shard')
 
 
 # on_member_join event
@@ -122,7 +125,6 @@ async def on_command_error(ctx, error):
         return await message.delete()
 
 # check .env
-check = False
 if not os.path.exists(f'{bot_location}.env'):
     with open(f'{bot_location}.env', 'w') as file:
         file.write('token=BotToken\nprefix=!\ndatabase=data.db')
@@ -147,4 +149,4 @@ print(
 )
 
 # start bot
-bot.run(token=os.getenv('token'))
+bot.run(token=os.getenv('token'), log_level=0)
