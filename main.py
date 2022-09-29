@@ -116,7 +116,12 @@ async def on_command_error(ctx, error):
             f'Hey {ctx.author.mention} Je moet `{time[0]}`uur `{time[1]}`minuten en `{(time[2])[:2]}` seconden wachten!'
         )
 
-        for i in range(1, 5):
+        if error.retry_after < 5:
+            loop_count = int(error.retry_after)
+        else:
+            loop_count = 5
+        
+        for i in range(1, loop_count):
             time = str(timedelta(seconds=error.retry_after - i)).split(':')
             await message.edit(
                 content=f'Hey {ctx.author.mention} Je moet `{time[0]}`uur `{time[1]}`minuten en `{(time[2])[:2]}` seconden wachten!'
